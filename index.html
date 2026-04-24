@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Viipie Realty Tools | Real Estate Calculators for India</title>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+      <style>
+                * {
+                              margin: 0;
+                              padding: 0;
+                              box-sizing: border-box;
+                }
+
+                body {
+                              font-family: 'DM Sans', sans-serif;
+                              background: linear-gradient(135deg, #f5f0e8 0%, #fef9ec 50%, #fff8e7 100%);
+                              color: #1a1208;
+                              min-height: 100vh;
+                              padding: 20px;
+                }
+
+                header {
+                              max-width: 1100px;
+                              margin: 0 auto 40px;
+                              text-align: center;
+                              padding-bottom: 30px;
+                              border-bottom: 2px solid rgba(180, 140, 60, 0.2);
+                }
+
+                .logo-section {
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              gap: 15px;
+                              margin-bottom: 20px;
+                }
+
+                .logo-badge {
+                              width: 60px;
+                              height: 60px;
+                              background: linear-gradient(135deg, #c9a84c, #a07830);
+                              border-radius: 12px;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              font-family: 'Playfair Display', serif;
+                              font-weight: 700;
+                              color: #fff;
+                              font-size: 28px;
+                              box-shadow: 0 4px 16px rgba(201, 168, 76, 0.3);
+                }
+
+                h1 {
+                              font-family: 'Playfair Display', serif;
+                              font-size: 42px;
+                              color: #1a1208;
+                              margin-bottom: 10px;
+                              background: linear-gradient(135deg, #c9a84c, #a07830);
+                              -webkit-background-clip: text;
+                              -webkit-text-fill-color: transparent;
+                              background-clip: text;
+                }
+
+                .subtitle {
+                              color: #7a6240;
+                              font-size: 16px;
+                              margin-bottom: 30px;
+                }
+
+                .container {
+                              max-width: 1100px;
+                              margin: 0 auto;
+                }
+
+                .tools-grid {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                              gap: 25px;
+                              margin-bottom: 40px;
+                }
+
+                .tool-card {
+                              background: rgba(255, 255, 255, 0.85);
+                              backdrop-filter: blur(16px);
+                              border: 1px solid rgba(180, 160, 100, 0.3);
+                              border-radius: 16px;
+                              padding: 30px;
+                              text-align: center;
+                              transition: all 0.3s ease;
+                              box-shadow: 0 4px 24px rgba(80, 50, 10, 0.1);
+                              display: flex;
+                              flex-direction: column;
+                              justify-content: space-between;
+                }
+
+                .tool-card:hover {
+                              transform: translateY(-5px);
+                              box-shadow: 0 8px 32px rgba(80, 50, 10, 0.15);
+                              border-color: rgba(180, 140, 60, 0.5);
+                }
+
+                .tool-icon {
+                              font-size: 48px;
+                              margin-bottom: 16px;
+                }
+
+                .tool-card h2 {
+                              font-family: 'Playfair Display', serif;
+                              font-size: 22px;
+                              color: #a07830;
+                              margin-bottom: 12px;
+                }
+
+                .tool-card p {
+                              color: #7a6240;
+                              font-size: 14px;
+                              line-height: 1.6;
+                              margin-bottom: 24px;
+                              flex-grow: 1;
+                }
+
+                .tool-card .features {
+                              text-align: left;
+                              background: rgba(201, 168, 76, 0.08);
+                              border-radius: 10px;
+                              padding: 12px;
+                              margin-bottom: 20px;
+                              font-size: 12px;
+                              color: #7a6240;
+                }
+
+                .tool-card .features li {
+                              list-style: none;
+                              padding: 4px 0;
+                }
+
+                .tool-card .features li:before {
+                              content: "✓ ";
+                              color: #15803d;
+                              font-weight: 600;
+                              margin-right: 6px;
+                }
+
+                .btn-open {
+                              display: inline-block;
+                              background: linear-gradient(135deg, #c9a84c, #a07830);
+                              color: #1a1208;
+                              padding: 12px 28px;
+                              border-radius: 10px;
+                              text-decoration: none;
+                              font-weight: 600;
+                              font-size: 14px;
+                              border: none;
+                              cursor: pointer;
+                              transition: all 0.3s ease;
+                              box-shadow: 0 2px 10px rgba(201, 168, 76, 0.3);
+                }
+
+                .btn-open:hover {
+                              opacity: 0.9;
+                              transform: translateY(-2px);
+                              box-shadow: 0 4px 16px rgba(201, 168, 76, 0.4);
+                }
+
+                footer {
+                              text-align: center;
+                              color: #7a6240;
+                              font-size: 12px;
+                              margin-top: 40px;
+                              padding-top: 20px;
+                              border-top: 1px solid rgba(180, 160, 100, 0.2);
+                }
+
+                footer a {
+                              color: #a07830;
+                              text-decoration: none;
+                }
+
+                footer a:hover {
+                              text-decoration: underline;
+                }
+
+                @media (max-width: 768px) {
+                              h1 {
+                                                font-size: 32px;
+                              }
+
+                              .tools-grid {
+                                                grid-template-columns: 1fr;
+                              }
+
+                              .logo-badge {
+                                                width: 50px;
+                                                height: 50px;
+                                                font-size: 24px;
+                              }
+                }
+            </style>
+  </head>
+  <body>
+        <header>
+                  <div class="logo-section">
+                                <div class="logo-badge">V</div>div>
+                                <div>
+                                                  <h1>Viipie Realty Tools</h1>
+                                                <p class="subtitle">Professional Real Estate Calculators for India</p>p>
+                                </div>
+                  </div>
+        </header>
+  
+      <main class="container">
+              <div class="tools-grid">
+                          <!-- Tool 1: ROI Calculator -->
+                          <div class="tool-card">
+                                          <div>
+                                                              <div class="tool-icon">📊</div>
+                                                              <h2>Property Investment ROI</h2>
+                                                              <p>Calculate returns, cash flow, and break-even period for any Indian real estate investment</p>
+                                                              <ul class="features">
+                                                                                      <li>EMI & Interest Calculation</li>
+                                                                                      <li>Annual Returns Analysis</li>
+                                                                                      <li>Cash Flow Breakdown</li>
+                                                                                      <li>Break-Even Period</li>
+                                                              </ul>ul>
+                                          </div>
+                                          <a href="ROI-calculator.html" class="btn-open" target="_self">Open Tool →</a>a>
+                          </div>
+              
+                          <!-- Tool 2: Rent vs Buy -->
+                          <div class="tool-card">
+                                          <div>
+                                                              <div class="tool-icon">🏠</div>
+                                                              <h2>Rent vs Buy Decision</h2>
+                                                              <p>Make informed property decisions by comparing the financial impact of renting versus buying</p>
+                                                              <ul class="features">
+                                                                                      <li>Financial Comparison</li>
+                                                                                      <li>Cost Analysis</li>
+                                                                                      <li>Savings Calculator</li>
+                                                                                      <li>Investment Metrics</li>
+                                                              </ul>ul>
+                                          </div>
+                                          <a href="Rent-vs-Buy.html" class="btn-open" target="_self">Open Tool →</a>a>
+                          </div>
+              
+                          <!-- Tool 3: Rental Yield -->
+                          <div class="tool-card">
+                                          <div>
+                                                              <div class="tool-icon">💰</div>
+                                                              <h2>Rental Yield Calculator</h2>
+                                                              <p>Determine the rental yield and profitability metrics for your rental properties</p>
+                                                              <ul class="features">
+                                                                                      <li>Gross Rental Yield</li>
+                                                                                      <li>Net Yield Calculation</li>
+                                                                                      <li>Income Projections</li>
+                                                                                      <li>ROI Metrics</li>
+                                                              </ul>ul>
+                                          </div>
+                                          <a href="Rental-yield.html" class="btn-open" target="_self">Open Tool →</a>a>
+                          </div>
+              
+                          <!-- Tool 4: Stamp Duty -->
+                          <div class="tool-card">
+                                          <div>
+                                                              <div class="tool-icon">📋</div>
+                                                              <h2>Stamp Duty Calculator</h2>
+                                                              <p>Calculate stamp duty, registration fees, and other legal charges for property transactions</p>
+                                                              <ul class="features">
+                                                                                      <li>Stamp Duty Estimation</li>
+                                                                                      <li>Registration Fees</li>
+                                                                                      <li>Legal Charges</li>
+                                                                                      <li>Total Cost Summary</li>
+                                                              </ul>ul>
+                                          </div>
+                                          <a href="Stamp-duty.html" class="btn-open" target="_self">Open Tool →</a>a>
+                          </div>
+              </div>
+      </main>main>
+  
+      <footer>
+                <p>© 2026 Viipie Realty Tools. All tools are designed for educational purposes.</p>p>
+                <p>For professional advice, consult with a SEBI-registered investment advisor.</p>p>
+      </footer>
+  </body>
+</html>html>
+      </footer></p></li></li></p></p></li></li></p></h2></h1>
+                                </div>
+        </header>
+  </body>
+      </style></title>
+  </head>
