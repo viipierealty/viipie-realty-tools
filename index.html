@@ -3,288 +3,185 @@
   <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Viipie Realty Tools | Real Estate Calculators for India</title>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <title>Viipie Realty Tools</title>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+      <script src="https://accounts.google.com/gsi/client" async defer></script>
       <style>
-                * {
-                              margin: 0;
-                              padding: 0;
-                              box-sizing: border-box;
-                }
-
-                body {
-                              font-family: 'DM Sans', sans-serif;
-                              background: linear-gradient(135deg, #f5f0e8 0%, #fef9ec 50%, #fff8e7 100%);
-                              color: #1a1208;
-                              min-height: 100vh;
-                              padding: 20px;
-                }
-
-                header {
-                              max-width: 1100px;
-                              margin: 0 auto 40px;
-                              text-align: center;
-                              padding-bottom: 30px;
-                              border-bottom: 2px solid rgba(180, 140, 60, 0.2);
-                }
-
-                .logo-section {
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              gap: 15px;
-                              margin-bottom: 20px;
-                }
-
-                .logo-badge {
-                              width: 60px;
-                              height: 60px;
-                              background: linear-gradient(135deg, #c9a84c, #a07830);
-                              border-radius: 12px;
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              font-family: 'Playfair Display', serif;
-                              font-weight: 700;
-                              color: #fff;
-                              font-size: 28px;
-                              box-shadow: 0 4px 16px rgba(201, 168, 76, 0.3);
-                }
-
-                h1 {
-                              font-family: 'Playfair Display', serif;
-                              font-size: 42px;
-                              color: #1a1208;
-                              margin-bottom: 10px;
-                              background: linear-gradient(135deg, #c9a84c, #a07830);
-                              -webkit-background-clip: text;
-                              -webkit-text-fill-color: transparent;
-                              background-clip: text;
-                }
-
-                .subtitle {
-                              color: #7a6240;
-                              font-size: 16px;
-                              margin-bottom: 30px;
-                }
-
-                .container {
-                              max-width: 1100px;
-                              margin: 0 auto;
-                }
-
-                .tools-grid {
-                              display: grid;
-                              grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-                              gap: 25px;
-                              margin-bottom: 40px;
-                }
-
-                .tool-card {
-                              background: rgba(255, 255, 255, 0.85);
-                              backdrop-filter: blur(16px);
-                              border: 1px solid rgba(180, 160, 100, 0.3);
-                              border-radius: 16px;
-                              padding: 30px;
-                              text-align: center;
-                              transition: all 0.3s ease;
-                              box-shadow: 0 4px 24px rgba(80, 50, 10, 0.1);
-                              display: flex;
-                              flex-direction: column;
-                              justify-content: space-between;
-                }
-
-                .tool-card:hover {
-                              transform: translateY(-5px);
-                              box-shadow: 0 8px 32px rgba(80, 50, 10, 0.15);
-                              border-color: rgba(180, 140, 60, 0.5);
-                }
-
-                .tool-icon {
-                              font-size: 48px;
-                              margin-bottom: 16px;
-                }
-
-                .tool-card h2 {
-                              font-family: 'Playfair Display', serif;
-                              font-size: 22px;
-                              color: #a07830;
-                              margin-bottom: 12px;
-                }
-
-                .tool-card p {
-                              color: #7a6240;
-                              font-size: 14px;
-                              line-height: 1.6;
-                              margin-bottom: 24px;
-                              flex-grow: 1;
-                }
-
-                .tool-card .features {
-                              text-align: left;
-                              background: rgba(201, 168, 76, 0.08);
-                              border-radius: 10px;
-                              padding: 12px;
-                              margin-bottom: 20px;
-                              font-size: 12px;
-                              color: #7a6240;
-                }
-
-                .tool-card .features li {
-                              list-style: none;
-                              padding: 4px 0;
-                }
-
-                .tool-card .features li:before {
-                              content: "✓ ";
-                              color: #15803d;
-                              font-weight: 600;
-                              margin-right: 6px;
-                }
-
-                .btn-open {
-                              display: inline-block;
-                              background: linear-gradient(135deg, #c9a84c, #a07830);
-                              color: #1a1208;
-                              padding: 12px 28px;
-                              border-radius: 10px;
-                              text-decoration: none;
-                              font-weight: 600;
-                              font-size: 14px;
-                              border: none;
-                              cursor: pointer;
-                              transition: all 0.3s ease;
-                              box-shadow: 0 2px 10px rgba(201, 168, 76, 0.3);
-                }
-
-                .btn-open:hover {
-                              opacity: 0.9;
-                              transform: translateY(-2px);
-                              box-shadow: 0 4px 16px rgba(201, 168, 76, 0.4);
-                }
-
-                footer {
-                              text-align: center;
-                              color: #7a6240;
-                              font-size: 12px;
-                              margin-top: 40px;
-                              padding-top: 20px;
-                              border-top: 1px solid rgba(180, 160, 100, 0.2);
-                }
-
-                footer a {
-                              color: #a07830;
-                              text-decoration: none;
-                }
-
-                footer a:hover {
-                              text-decoration: underline;
-                }
-
-                @media (max-width: 768px) {
-                              h1 {
-                                                font-size: 32px;
-                              }
-
-                              .tools-grid {
-                                                grid-template-columns: 1fr;
-                              }
-
-                              .logo-badge {
-                                                width: 50px;
-                                                height: 50px;
-                                                font-size: 24px;
-                              }
-                }
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: 'DM Sans', sans-serif; background: #f5f0e8; color: #1a1208; }
+                header { background: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
+                .logo-badge { width: 40px; height: 40px; background: linear-gradient(135deg, #c9a84c, #a07830); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 20px; }
+                .logo-text { font-family: 'Playfair Display', serif; font-size: 18px; color: #1a1208; font-weight: 700; }
+                .header-right { display: flex; gap: 15px; align-items: center; }
+                .user-info { font-size: 12px; color: #7a6240; }
+                .logout-btn { background: #c9a84c; color: #1a1208; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; }
+                .logout-btn:hover { opacity: 0.9; }
+                main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+                .login-container { text-align: center; padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                .login-container h1 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 10px; color: #a07830; }
+                .login-container p { color: #7a6240; margin-bottom: 30px; font-size: 14px; }
+                #g_id_onload { margin: 20px 0; }
+                .tools-container { display: none; }
+                .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }
+                .tool-card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.3s; text-decoration: none; color: inherit; }
+                .tool-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: #c9a84c; }
+                .tool-icon { font-size: 32px; margin-bottom: 8px; }
+                .tool-name { font-size: 13px; font-weight: 600; color: #a07830; margin-bottom: 4px; }
+                .tool-desc { font-size: 11px; color: #7a6240; line-height: 1.3; }
+                footer { text-align: center; font-size: 11px; color: #7a6240; margin-top: 30px; padding: 20px; }
+                .back-btn { background: #c9a84c; color: #1a1208; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; margin-right: 10px; display: none; }
+                .back-btn.show { display: inline-block; }
             </style>
   </head>
   <body>
         <header>
-                  <div class="logo-section">
+                  <a href="/" class="logo" id="logoLink">
                                 <div class="logo-badge">V</div>div>
-                                <div>
-                                                  <h1>Viipie Realty Tools</h1>
-                                                <p class="subtitle">Professional Real Estate Calculators for India</p>p>
-                                </div>
-                  </div>
+                                <div class="logo-text">Viipie Tools</div>div>
+                  </a>a>
+                  <div class="header-right">
+                                <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>button>
+                                <div id="userSection" style="display: none;">
+                                                  <div class="user-info">Welcome, <span id="userName"></span>span></div>div>
+                                                  <button class="logout-btn" onclick="logout()">Logout</button>button>
+                                </div>div>
+                                <div id="loginSection">
+                                                  <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>div>
+                                                  <div class="g_id_signin" data-type="standard"></div>div>
+                                </div>div>
+                  </div>div>
         </header>
-  
-      <main class="container">
-              <div class="tools-grid">
-                          <!-- Tool 1: ROI Calculator -->
-                          <div class="tool-card">
-                                          <div>
-                                                              <div class="tool-icon">📊</div>
-                                                              <h2>Property Investment ROI</h2>
-                                                              <p>Calculate returns, cash flow, and break-even period for any Indian real estate investment</p>
-                                                              <ul class="features">
-                                                                                      <li>EMI & Interest Calculation</li>
-                                                                                      <li>Annual Returns Analysis</li>
-                                                                                      <li>Cash Flow Breakdown</li>
-                                                                                      <li>Break-Even Period</li>
-                                                              </ul>ul>
-                                          </div>
-                                          <a href="ROI-calculator.html" class="btn-open" target="_self">Open Tool →</a>a>
-                          </div>
-              
-                          <!-- Tool 2: Rent vs Buy -->
-                          <div class="tool-card">
-                                          <div>
-                                                              <div class="tool-icon">🏠</div>
-                                                              <h2>Rent vs Buy Decision</h2>
-                                                              <p>Make informed property decisions by comparing the financial impact of renting versus buying</p>
-                                                              <ul class="features">
-                                                                                      <li>Financial Comparison</li>
-                                                                                      <li>Cost Analysis</li>
-                                                                                      <li>Savings Calculator</li>
-                                                                                      <li>Investment Metrics</li>
-                                                              </ul>ul>
-                                          </div>
-                                          <a href="Rent-vs-Buy.html" class="btn-open" target="_self">Open Tool →</a>a>
-                          </div>
-              
-                          <!-- Tool 3: Rental Yield -->
-                          <div class="tool-card">
-                                          <div>
-                                                              <div class="tool-icon">💰</div>
-                                                              <h2>Rental Yield Calculator</h2>
-                                                              <p>Determine the rental yield and profitability metrics for your rental properties</p>
-                                                              <ul class="features">
-                                                                                      <li>Gross Rental Yield</li>
-                                                                                      <li>Net Yield Calculation</li>
-                                                                                      <li>Income Projections</li>
-                                                                                      <li>ROI Metrics</li>
-                                                              </ul>ul>
-                                          </div>
-                                          <a href="Rental-yield.html" class="btn-open" target="_self">Open Tool →</a>a>
-                          </div>
-              
-                          <!-- Tool 4: Stamp Duty -->
-                          <div class="tool-card">
-                                          <div>
-                                                              <div class="tool-icon">📋</div>
-                                                              <h2>Stamp Duty Calculator</h2>
-                                                              <p>Calculate stamp duty, registration fees, and other legal charges for property transactions</p>
-                                                              <ul class="features">
-                                                                                      <li>Stamp Duty Estimation</li>
-                                                                                      <li>Registration Fees</li>
-                                                                                      <li>Legal Charges</li>
-                                                                                      <li>Total Cost Summary</li>
-                                                              </ul>ul>
-                                          </div>
-                                          <a href="Stamp-duty.html" class="btn-open" target="_self">Open Tool →</a>a>
-                          </div>
-              </div>
-      </main>main>
+
+        <main>
+                  <div id="loginContainer" class="login-container">
+                                <h1>Viipie Realty Tools</h1>
+                              <p>Professional Real Estate Calculators for India</p>
+                              <div id="g_id_onload_main" data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>div>
+                              <div class="g_id_signin" data-type="standard"></div>div>
+                  </div>div>
+        
+                <div id="toolsContainer" class="tools-container">
+                            <div class="tools-grid">
+                                            <a href="ROI-calculator.html" class="tool-card" onclick="trackToolUsage('ROI Calculator')">
+                                                                <div class="tool-icon">📊</div>div>
+                                                                <div class="tool-name">ROI</div>div>
+                                                                <div class="tool-desc">Investment Returns</div>div>
+                                            </a>a>
+                                            <a href="Rent-vs-Buy.html" class="tool-card" onclick="trackToolUsage('Rent vs Buy')">
+                                                                <div class="tool-icon">🏠</div>div>
+                                                                <div class="tool-name">Rent vs Buy</div>div>
+                                                                <div class="tool-desc">Decision Helper</div>div>
+                                            </a>a>
+                                            <a href="Rental-yield.html" class="tool-card" onclick="trackToolUsage('Rental Yield')">
+                                                                <div class="tool-icon">💰</div>div>
+                                                                <div class="tool-name">Yield</div>div>
+                                                                <div class="tool-desc">Rental Income</div>div>
+                                            </a>a>
+                                            <a href="Stamp-duty.html" class="tool-card" onclick="trackToolUsage('Stamp Duty')">
+                                                                <div class="tool-icon">📋</div>div>
+                                                                <div class="tool-name">Stamp Duty</div>div>
+                                                                <div class="tool-desc">Legal Charges</div>div>
+                                            </a>a>
+                            </div>div>
+                </div>div>
+        </main>
   
       <footer>
-                <p>© 2026 Viipie Realty Tools. All tools are designed for educational purposes.</p>p>
-                <p>For professional advice, consult with a SEBI-registered investment advisor.</p>p>
+                <p>© 2026 Viipie Realty Tools | Made for Indian Real Estate Professionals</p>p>
       </footer>
+
+        <script>
+                  function handleCredentialResponse(response) {
+                                const credentials = jwt_decode(response.credential);
+                                const userData = {
+                                                  name: credentials.name,
+                                                  email: credentials.email,
+                                                  picture: credentials.picture,
+                                                  timestamp: new Date().toISOString()
+                                };
+
+                                // Save user data to localStorage
+                                localStorage.setItem('viipieUser', JSON.stringify(userData));
+
+                                // Send data to admin (replace with your backend endpoint)
+                                fetch('https://your-backend-url.com/api/user-login', {
+                                                  method: 'POST',
+                                                  headers: { 'Content-Type': 'application/json' },
+                                                  body: JSON.stringify(userData)
+                                }).catch(() => {}); // Silently fail if backend not available
+
+                                showUserDashboard(userData);
+                  }
+
+                  function showUserDashboard(userData) {
+                                document.getElementById('loginContainer').style.display = 'none';
+                                document.getElementById('loginSection').style.display = 'none';
+                                document.getElementById('toolsContainer').style.display = 'block';
+                                document.getElementById('userSection').style.display = 'flex';
+                                document.getElementById('userName').textContent = userData.name.split(' ')[0];
+                  }
+
+                  function logout() {
+                                localStorage.removeItem('viipieUser');
+                                document.getElementById('loginContainer').style.display = 'block';
+                                document.getElementById('loginSection').style.display = 'block';
+                                document.getElementById('toolsContainer').style.display = 'none';
+                                document.getElementById('userSection').style.display = 'none';
+                                google.accounts.id.disableAutoSelect();
+                  }
+
+                  function trackToolUsage(toolName) {
+                                const user = JSON.parse(localStorage.getItem('viipieUser') || '{}');
+                                const usageData = {
+                                                  user: user,
+                                                  tool: toolName,
+                                                  timestamp: new Date().toISOString()
+                                };
+
+                                // Send usage data to admin
+                                fetch('https://your-backend-url.com/api/tool-usage', {
+                                                  method: 'POST',
+                                                  headers: { 'Content-Type': 'application/json' },
+                                                  body: JSON.stringify(usageData)
+                                }).catch(() => {});
+
+                                // Store in localStorage as backup
+                                let usageHistory = JSON.parse(localStorage.getItem('viipieUsage') || '[]');
+                                usageHistory.push(usageData);
+                                localStorage.setItem('viipieUsage', JSON.stringify(usageHistory));
+                  }
+
+                  function goBack() {
+                                window.location.href = '/';
+                  }
+
+                  // Check if user is logged in on page load
+                  window.addEventListener('load', () => {
+                                const user = localStorage.getItem('viipieUser');
+                                if (user) {
+                                                  showUserDashboard(JSON.parse(user));
+                                }
+
+                                // Show back button when not on home page
+                                if (window.location.pathname !== '/') {
+                                                  document.getElementById('backBtn').classList.add('show');
+                                }
+                  });
+
+                  // JWT decode function (use a library in production)
+                  function jwt_decode(token) {
+                                const base64Url = token.split('.')[1];
+                                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                                const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+                                return JSON.parse(jsonPayload);
+                  }
+        </script>
   </body>
 </html>html>
-      </footer></p></li></li></p></p></li></li></p></h2></h1>
-                                </div>
+        </script>
+      </footer></p></h1>
+        </main>
         </header>
   </body>
       </style></title>
