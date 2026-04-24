@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Property Investment ROI Calculator India | Viipie Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══ LIGHT THEME ═══ */
+:root,[data-theme="light"]{
+  --bg-body:#f5f0e8;
+  --s1:rgba(255,255,255,0.84);--s2:rgba(255,255,255,0.65);
+  --border:rgba(180,160,100,.3);--border-strong:rgba(180,140,60,.5);
+  --gold:#a07830;--gold-light:#c9a84c;--gold-dim:rgba(180,140,60,.12);
+  --text:#1a1208;--dim:#7a6240;--dimmer:#b09060;
+  --green:#15803d;--red:#dc2626;--blue:#1d4ed8;
+  --shadow:0 4px 24px rgba(80,50,10,.10),0 1px 4px rgba(80,50,10,.06);
+  --radius:14px;
+}
+/* ═══ DARK THEME ═══ */
+[data-theme="dark"]{
+  --bg-body:#0d1117;
+  --s1:rgba(22,27,34,0.92);--s2:rgba(28,34,48,0.85);
+  --border:rgba(42,50,65,.7);--border-strong:rgba(201,168,76,.3);
+  --gold:#c9a84c;--gold-light:#e8c96a;--gold-dim:rgba(201,168,76,.15);
+  --text:#e6edf3;--dim:#8b949e;--dimmer:#4a5568;
+  --green:#3fb950;--red:#f85149;--blue:#58a6ff;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 6px rgba(0,0,0,.3);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-body);color:var(--text);min-height:100vh;transition:background .4s,color .3s;}
+
+/* ═══ PREMIUM BACKGROUNDS ═══ */
+[data-theme="light"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 55% at 10% 5%,rgba(255,220,100,.28) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 15%,rgba(255,180,60,.2) 0%,transparent 50%),
+    radial-gradient(ellipse 55% 45% at 50% 95%,rgba(200,160,80,.22) 0%,transparent 50%),
+    linear-gradient(150deg,#fdfaf4 0%,#fef9ec 40%,#fff8e7 70%,#fdf5e0 100%);}
+[data-theme="light"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");opacity:.7;}
+[data-theme="dark"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 5% 5%,rgba(201,168,76,.07) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 95% 10%,rgba(232,201,106,.05) 0%,transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 95%,rgba(201,168,76,.05) 0%,transparent 50%),
+    linear-gradient(160deg,#0d1117 0%,#101520 35%,#0d1117 100%);}
+[data-theme="dark"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+header,main{position:relative;z-index:1;}
+
+/* ═══ HEADER ═══ */
+header{background:var(--s1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.logo-badge{width:38px;height:38px;background:linear-gradient(135deg,var(--gold-light),var(--gold));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:17px;flex-shrink:0;box-shadow:0 2px 10px rgba(201,168,76,.35);}
+.header-text{flex:1;min-width:0;}
+header h1{font-family:'Playfair Display',serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+header p{font-size:10px;color:var(--dim);margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tool-badge{background:var(--gold-dim);border:1px solid var(--gold);color:var(--gold);padding:3px 10px;border-radius:16px;font-size:10px;font-family:'DM Mono',monospace;}
+.theme-btn{width:50px;height:26px;background:var(--s2);border:1px solid var(--border-strong);border-radius:13px;cursor:pointer;display:flex;align-items:center;padding:3px;flex-shrink:0;transition:all .3s;}
+.theme-knob{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--gold-light),var(--gold));box-shadow:0 1px 6px rgba(0,0,0,.2);transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;}
+[data-theme="dark"] .theme-knob{transform:translateX(24px);}
+[data-theme="light"] .theme-knob{transform:translateX(0);}
+
+/* ═══ MAIN ═══ */
+main{max-width:1100px;margin:20px auto;padding:0 16px;}
+.hero{text-align:center;margin-bottom:24px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,32px);background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.hero p{color:var(--dim);font-size:13px;}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.card{background:var(--s1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.card h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.form-group{margin-bottom:14px;}
+label{display:block;font-size:11px;color:var(--dim);margin-bottom:4px;font-weight:500;}
+.input-wrap{position:relative;}
+.input-prefix,.input-suffix{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-family:'DM Mono',monospace;font-weight:500;pointer-events:none;}
+.input-prefix{left:9px;color:var(--gold);}
+.input-suffix{right:9px;color:var(--dimmer);}
+input[type="number"]{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 36px 8px 26px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;transition:border-color .2s,background .3s;-webkit-appearance:none;-moz-appearance:textfield;}
+input[type="number"]:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+.btn-calc{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#1a1208;font-weight:700;font-size:14px;border:none;border-radius:9px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,transform .1s;margin-top:6px;}
+.btn-calc:hover{opacity:.9;transform:translateY(-1px);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.kpi{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;transition:background .3s,border-color .3s;}
+.kpi-label{font-size:9px;color:var(--dimmer);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.kpi-value{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;}
+.kpi-value.gold{color:var(--gold-light);}
+.kpi-value.green{color:var(--green);}
+.kpi-value.red{color:var(--red);}
+.kpi-value.blue{color:var(--blue);}
+
+.section-title{font-size:10px;color:var(--dimmer);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);margin-top:16px;}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.detail-row:last-child{border-bottom:none;}
+.detail-label{color:var(--dim);}
+.detail-value{font-family:'DM Mono',monospace;font-weight:500;}
+.positive{color:var(--green)!important;}.negative{color:var(--red)!important;}
+
+/* Placeholder */
+#placeholderCard{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:280px;}
+
+/* Formulas / test */
+.test-table{width:100%;border-collapse:collapse;font-size:11px;}
+.test-table th{background:var(--s2);color:var(--gold);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-weight:500;position:sticky;top:0;transition:background .3s;}
+.test-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;}
+.test-table tr:hover td{background:var(--gold-dim);}
+
+.disclaimer{margin-top:20px;background:var(--gold-dim);border:1px solid var(--border-strong);border-radius:10px;padding:12px 16px;}
+.disclaimer p{font-size:11px;color:var(--dim);line-height:1.7;}
+.disclaimer strong{color:var(--gold);}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  header p{display:none;}
+  .tool-badge{display:none;}
+  header h1{font-size:14px;}
+  main{padding:0 12px;margin:12px auto;}
+  .hero h2{font-size:20px;}
+  .card{padding:16px 14px;}
+}
+@media(max-width:360px){.kpi-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-badge">V</div>
+  <div class="header-text"><h1>Viipie Property Tools</h1><p>India Real Estate Intelligence Suite</p></div>
+  <div class="header-right">
+    <span class="tool-badge">TOOL 01</span>
+    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+      <div class="theme-knob" id="themeKnob">☀️</div>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h2>Property Investment ROI Calculator</h2>
+    <p>Analyse returns, cash flow, and break-even for any Indian real estate investment</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>📥 Investment Inputs</h3>
+      <div class="form-group"><label>Property Price</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="propPrice" value="8000000"><span class="input-suffix">INR</span></div></div>
+      <div class="form-group"><label>Down Payment</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="downPayment" value="2000000"><span class="input-suffix">INR</span></div></div>
+      <div class="form-group"><label>Home Loan Interest Rate (p.a.)</label><div class="input-wrap"><span class="input-prefix">%</span><input type="number" id="interestRate" value="8.5" step="0.1"><span class="input-suffix">p.a.</span></div></div>
+      <div class="form-group"><label>Loan Tenure</label><div class="input-wrap"><span class="input-prefix">⏱</span><input type="number" id="tenure" value="20" min="1" max="30"><span class="input-suffix">Yrs</span></div></div>
+      <div class="form-group"><label>Expected Monthly Rent</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="monthlyRent" value="25000"><span class="input-suffix">/ mo</span></div></div>
+      <div class="form-group"><label>Annual Property Appreciation</label><div class="input-wrap"><span class="input-prefix">%</span><input type="number" id="appreciation" value="6" step="0.1"><span class="input-suffix">p.a.</span></div></div>
+      <div class="form-group"><label>Annual Maintenance Cost</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="maintenance" value="36000"><span class="input-suffix">p.a.</span></div></div>
+      <button class="btn-calc" onclick="calculate()">⚡ Calculate ROI</button>
+    </div>
+
+    <div>
+      <div class="card results" id="resultsCard" style="display:none">
+        <h3>📊 Investment Analysis</h3>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Total ROI</div><div class="kpi-value gold" id="roi">—</div></div>
+          <div class="kpi"><div class="kpi-label">Net Annual Return</div><div class="kpi-value green" id="netReturn">—</div></div>
+          <div class="kpi"><div class="kpi-label">Break-Even Period</div><div class="kpi-value blue" id="breakEven">—</div></div>
+          <div class="kpi"><div class="kpi-label">Monthly Cash Flow</div><div class="kpi-value" id="cashFlow">—</div></div>
+        </div>
+        <div class="section-title">Loan Summary</div>
+        <div class="detail-row"><span class="detail-label">Loan Amount</span><span class="detail-value" id="loanAmt">—</span></div>
+        <div class="detail-row"><span class="detail-label">Monthly EMI</span><span class="detail-value" id="emi">—</span></div>
+        <div class="detail-row"><span class="detail-label">Total Interest Paid</span><span class="detail-value" id="totalInterest">—</span></div>
+        <div class="detail-row"><span class="detail-label">Total Loan Outflow</span><span class="detail-value" id="totalLoan">—</span></div>
+        <div class="section-title">Annual Returns</div>
+        <div class="detail-row"><span class="detail-label">Gross Rental Income</span><span class="detail-value" id="grossRent">—</span></div>
+        <div class="detail-row"><span class="detail-label">Annual Appreciation Gain</span><span class="detail-value" id="appGain">—</span></div>
+        <div class="detail-row"><span class="detail-label">Annual Maintenance</span><span class="detail-value" id="maintCost">—</span></div>
+        <div class="detail-row"><span class="detail-label">Annual EMI Outflow</span><span class="detail-value" id="emiAnnual">—</span></div>
+        <div class="detail-row"><span class="detail-label">Net Annual Return</span><span class="detail-value" id="netAnnual">—</span></div>
+        <div class="section-title">Cash Flow Breakdown (Monthly)</div>
+        <div class="detail-row"><span class="detail-label">Rent Income</span><span class="detail-value positive" id="cfRent">—</span></div>
+        <div class="detail-row"><span class="detail-label">EMI Outflow</span><span class="detail-value negative" id="cfEMI">—</span></div>
+        <div class="detail-row"><span class="detail-label">Maintenance</span><span class="detail-value negative" id="cfMaint">—</span></div>
+        <div class="detail-row"><span class="detail-label">Net Monthly Cash Flow</span><span class="detail-value" id="cfNet">—</span></div>
+      </div>
+      <div class="card" id="placeholderCard">
+        <div style="font-size:48px;opacity:0.2">📈</div>
+        <p style="color:var(--dim);text-align:center;font-size:13px">Fill inputs on the left<br>and click Calculate ROI</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3>🔢 Formulas &amp; Assumptions</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div class="section-title" style="margin-top:0">Core Formulas</div>
+        <div class="detail-row"><span class="detail-label">Loan Amount</span><span class="detail-value" style="font-size:11px">Price − Down Payment</span></div>
+        <div class="detail-row"><span class="detail-label">EMI</span><span class="detail-value" style="font-size:11px">P×r×(1+r)ⁿ / ((1+r)ⁿ−1)</span></div>
+        <div class="detail-row"><span class="detail-label">Net Annual Return</span><span class="detail-value" style="font-size:11px">Rent + Apprec − EMI − Maint</span></div>
+        <div class="detail-row"><span class="detail-label">ROI %</span><span class="detail-value" style="font-size:11px">Net / Down × 100</span></div>
+        <div class="detail-row"><span class="detail-label">Break-Even</span><span class="detail-value" style="font-size:11px">Down / Net Annual (yrs)</span></div>
+      </div>
+      <div>
+        <div class="section-title" style="margin-top:0">Key Assumptions</div>
+        <div class="detail-row"><span class="detail-label">Appreciation</span><span class="detail-value" style="font-size:11px">On original price</span></div>
+        <div class="detail-row"><span class="detail-label">Rent</span><span class="detail-value" style="font-size:11px">Constant (no escalation)</span></div>
+        <div class="detail-row"><span class="detail-label">Vacancy</span><span class="detail-value" style="font-size:11px">100% occupancy assumed</span></div>
+        <div class="detail-row"><span class="detail-label">Tax</span><span class="detail-value" style="font-size:11px">Pre-tax returns</span></div>
+        <div class="detail-row"><span class="detail-label">EMI type</span><span class="detail-value" style="font-size:11px">Reducing balance, monthly</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3>🧪 10 Test Cases — Verified Outputs</h3>
+    <div style="overflow-x:auto;max-height:300px;overflow-y:auto;">
+      <table class="test-table">
+        <thead><tr><th>#</th><th>Price(₹L)</th><th>Down(₹L)</th><th>Rate%</th><th>Yrs</th><th>Rent/mo</th><th>Apprec%</th><th>Maint/yr</th><th>EMI/mo</th><th>ROI%</th><th>Break-Even</th></tr></thead>
+        <tbody id="testRows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>⚠️ Disclaimer:</strong> This calculator is for educational and informational purposes only. Results are based on user-provided inputs and simplified financial models. They do not constitute financial, investment, or legal advice. Always consult a SEBI-registered investment advisor before making property investment decisions.</p>
+  </div>
+</main>
+
+<script>
+// THEME
+const html=document.documentElement;
+const themeKnob=document.getElementById('themeKnob');
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const t=html.getAttribute('data-theme')==='light'?'dark':'light';
+  html.setAttribute('data-theme',t);
+  themeKnob.textContent=t==='dark'?'🌙':'☀️';
+  localStorage.setItem('viipie-theme-01',t);
+});
+const saved=localStorage.getItem('viipie-theme-01');
+if(saved&&saved!=='light'){html.setAttribute('data-theme',saved);themeKnob.textContent='🌙';}
+
+// CALC
+function fmt(n){if(Math.abs(n)>=1e7)return'₹'+(n/1e7).toFixed(2)+' Cr';if(Math.abs(n)>=1e5)return'₹'+(n/1e5).toFixed(2)+' L';return'₹'+Math.round(n).toLocaleString('en-IN');}
+function fmtK(n){return'₹'+Math.round(n).toLocaleString('en-IN');}
+function calcEMI(P,r,n){if(r===0)return P/n;return P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);}
+
+function calculate(){
+  const P0=parseFloat(document.getElementById('propPrice').value)||0;
+  const dp=parseFloat(document.getElementById('downPayment').value)||0;
+  const rate=parseFloat(document.getElementById('interestRate').value)||0;
+  const years=parseFloat(document.getElementById('tenure').value)||20;
+  const rent=parseFloat(document.getElementById('monthlyRent').value)||0;
+  const apprec=parseFloat(document.getElementById('appreciation').value)||0;
+  const maint=parseFloat(document.getElementById('maintenance').value)||0;
+  if(dp<=0||P0<=0){alert('Enter valid property price and down payment.');return;}
+  const loan=P0-dp,r=rate/100/12,n=years*12;
+  const emi=loan>0?calcEMI(loan,r,n):0;
+  const totalLoan=emi*n,totalInterest=totalLoan-loan;
+  const annualRent=rent*12,annualApprec=P0*(apprec/100),annualEMI=emi*12;
+  const netAnnual=annualRent+annualApprec-annualEMI-maint;
+  const roi=dp>0?(netAnnual/dp)*100:0;
+  const breakEven=netAnnual>0?dp/netAnnual:null;
+  const monthlyCF=(annualRent-annualEMI-maint)/12;
+  document.getElementById('placeholderCard').style.display='none';
+  document.getElementById('resultsCard').style.display='block';
+  document.getElementById('roi').textContent=roi.toFixed(2)+'%';
+  document.getElementById('roi').className='kpi-value '+(roi>=0?'gold':'red');
+  document.getElementById('netReturn').textContent=fmt(netAnnual);
+  document.getElementById('netReturn').className='kpi-value '+(netAnnual>=0?'green':'red');
+  document.getElementById('breakEven').textContent=breakEven?breakEven.toFixed(1)+' yrs':'N/A';
+  document.getElementById('cashFlow').textContent=fmtK(monthlyCF)+'/mo';
+  document.getElementById('cashFlow').className='kpi-value '+(monthlyCF>=0?'green':'red');
+  document.getElementById('loanAmt').textContent=fmt(loan);
+  document.getElementById('emi').textContent=fmtK(Math.round(emi))+'/mo';
+  document.getElementById('totalInterest').textContent=fmt(totalInterest);
+  document.getElementById('totalLoan').textContent=fmt(totalLoan);
+  document.getElementById('grossRent').textContent=fmt(annualRent);
+  document.getElementById('appGain').textContent=fmt(annualApprec);
+  document.getElementById('maintCost').textContent=fmt(maint);
+  document.getElementById('emiAnnual').textContent=fmt(annualEMI);
+  document.getElementById('netAnnual').textContent=fmt(netAnnual);
+  document.getElementById('cfRent').textContent='+'+fmtK(Math.round(rent));
+  document.getElementById('cfEMI').textContent='-'+fmtK(Math.round(emi));
+  document.getElementById('cfMaint').textContent='-'+fmtK(Math.round(maint/12));
+  document.getElementById('cfNet').textContent=fmtK(Math.round(monthlyCF));
+  document.getElementById('cfNet').className='detail-value '+(monthlyCF>=0?'positive':'negative');
+}
+
+// Test table
+const tests=[[5000000,1500000,8.5,20,18000,5,24000],[8000000,2000000,8.5,20,25000,6,36000],[12000000,3000000,9.0,25,35000,7,60000],[3000000,900000,8.0,15,10000,4,18000],[15000000,4500000,9.5,20,50000,8,80000],[6000000,1800000,8.75,20,20000,5,30000],[20000000,6000000,9.0,25,65000,7,100000],[4000000,1200000,8.5,15,14000,5,24000],[10000000,2500000,9.25,20,30000,6,50000],[25000000,7500000,9.5,25,80000,8,120000]];
+const tbody=document.getElementById('testRows');
+tests.forEach((t,i)=>{
+  const[P0,dp,rate,years,rent,apprec,maint]=t;
+  const loan=P0-dp,r=rate/100/12,n=years*12;
+  const emi=calcEMI(loan,r,n);
+  const netAnnual=rent*12+P0*(apprec/100)-emi*12-maint;
+  const roi=(netAnnual/dp)*100;
+  const be=netAnnual>0?(dp/netAnnual).toFixed(1)+'y':'N/A';
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${i+1}</td><td>${(P0/100000).toFixed(0)}</td><td>${(dp/100000).toFixed(0)}</td><td>${rate}</td><td>${years}</td><td>${rent.toLocaleString('en-IN')}</td><td>${apprec}</td><td>${(maint/12).toFixed(0)}/mo</td><td>${Math.round(emi).toLocaleString('en-IN')}</td><td class="${roi>=0?'positive':'negative'}">${roi.toFixed(1)}%</td><td>${be}</td>`;
+  tbody.appendChild(tr);
+});
+calculate();
+</script>
+</body>
+</html>

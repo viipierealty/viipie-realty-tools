@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Rent vs Buy Calculator — Professional Grade | Viipie Tools</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   LIGHT THEME — Default
+═══════════════════════════════════════════════ */
+:root,[data-theme="light"]{
+  --bg-body: #f0f4f8;
+  --bg-mesh1: #e8f0fe;
+  --bg-mesh2: #fce4ec;
+  --bg-mesh3: #e8f5e9;
+  --bg-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+
+  --s1: rgba(255,255,255,0.82);
+  --s2: rgba(255,255,255,0.65);
+  --border: rgba(180,200,220,0.45);
+  --border-strong: rgba(140,170,200,0.6);
+
+  --teal:#0d9488;--teal-dim:rgba(13,148,136,.1);--teal-b:rgba(13,148,136,.35);
+  --orange:#c2410c;--orange-dim:rgba(194,65,12,.09);--orange-b:rgba(194,65,12,.3);
+  --sip:#7c3aed;--sip-dim:rgba(124,58,237,.09);--sip-b:rgba(124,58,237,.28);
+  --green:#15803d;--red:#dc2626;--gold:#b45309;--blue:#1d4ed8;
+
+  --text:#1a2332;--dim:#5a7494;--dimmer:#8aa4be;
+  --shadow: 0 4px 24px rgba(10,30,60,.10), 0 1px 4px rgba(10,30,60,.06);
+  --shadow-hover: 0 8px 32px rgba(10,30,60,.15);
+  --radius:14px;
+
+  /* Chart colors for light */
+  --chart-tick:#5a7494;
+  --chart-grid:rgba(100,140,180,.15);
+  --chart-buy:#0d9488;
+  --chart-rent:#c2410c;
+  --chart-buy-fill:rgba(13,148,136,.08);
+  --chart-rent-fill:rgba(194,65,12,.06);
+}
+
+/* ═══════════════════════════════════════════════
+   DARK THEME
+═══════════════════════════════════════════════ */
+[data-theme="dark"]{
+  --bg-body: #090e15;
+  --bg-mesh1: #0d1219;
+  --bg-mesh2: #0f1825;
+  --bg-mesh3: #0b1620;
+
+  --s1: rgba(19,28,39,0.9);
+  --s2: rgba(25,35,51,0.85);
+  --border: rgba(30,46,66,.6);
+  --border-strong: rgba(45,212,191,.25);
+
+  --teal:#2dd4bf;--teal-dim:rgba(45,212,191,.09);--teal-b:rgba(45,212,191,.28);
+  --orange:#fb923c;--orange-dim:rgba(251,146,60,.09);--orange-b:rgba(251,146,60,.28);
+  --sip:#a78bfa;--sip-dim:rgba(167,139,250,.09);--sip-b:rgba(167,139,250,.28);
+  --green:#4ade80;--red:#f87171;--gold:#fbbf24;--blue:#60a5fa;
+
+  --text:#e2e8f0;--dim:#6e88a6;--dimmer:#3d5473;
+  --shadow: 0 4px 24px rgba(0,0,0,.4), 0 1px 6px rgba(0,0,0,.3);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,.6);
+  --radius:14px;
+
+  --chart-tick:#6e88a6;
+  --chart-grid:rgba(30,46,66,.5);
+  --chart-buy:#2dd4bf;
+  --chart-rent:#fb923c;
+  --chart-buy-fill:rgba(45,212,191,.08);
+  --chart-rent-fill:rgba(251,146,60,.06);
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background-color:var(--bg-body);
+  color:var(--text);
+  min-height:100vh;
+  position:relative;
+  transition: background-color .4s ease, color .3s ease;
+}
+
+/* ═══════════════════════════════════════════════
+   PREMIUM BACKGROUND — LIGHT
+═══════════════════════════════════════════════ */
+[data-theme="light"] body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(199,210,254,.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(167,243,208,.4) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(253,186,116,.3) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 40% at 80% 80%, rgba(196,181,253,.35) 0%, transparent 55%),
+    linear-gradient(155deg, #eef2ff 0%, #f0fdf4 40%, #fff7ed 70%, #fdf2f8 100%);
+}
+[data-theme="light"] body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  opacity:.6;
+}
+
+/* ═══════════════════════════════════════════════
+   PREMIUM BACKGROUND — DARK
+═══════════════════════════════════════════════ */
+[data-theme="dark"] body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 5% 5%, rgba(45,212,191,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 95% 8%, rgba(167,139,250,.07) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 95%, rgba(251,146,60,.06) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 45% at 85% 85%, rgba(45,212,191,.05) 0%, transparent 50%),
+    linear-gradient(160deg, #090e15 0%, #0a1320 35%, #0d1219 65%, #090e15 100%);
+}
+[data-theme="dark"] body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+}
+
+/* everything above z-index:0 */
+header,main{position:relative;z-index:1;}
+
+@media print{
+  .no-print{display:none!important;}
+  body::before,body::after{display:none!important;}
+  body{background:#fff;color:#000;}
+  .card{border:1px solid #ddd!important;background:#fff!important;}
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+header{
+  background: var(--s1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow: var(--shadow);
+  transition: background .4s ease, border-color .3s ease;
+}
+.logo{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--teal),#0d9488);
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:700;
+  color:#fff;font-size:17px;
+  flex-shrink:0;
+  box-shadow:0 2px 12px rgba(45,212,191,.3);
+}
+.header-text{flex:1;min-width:0;}
+header h1{font-family:'Playfair Display',serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+header p{font-size:10px;color:var(--dim);margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.badge{background:var(--teal-dim);border:1px solid var(--teal-b);color:var(--teal);padding:3px 10px;border-radius:16px;font-size:10px;font-family:'DM Mono',monospace;}
+
+/* THEME TOGGLE BUTTON */
+.theme-btn{
+  position:relative;
+  width:50px;height:26px;
+  background:var(--s2);
+  border:1px solid var(--border-strong);
+  border-radius:13px;
+  cursor:pointer;
+  transition:all .3s ease;
+  flex-shrink:0;
+  display:flex;align-items:center;
+  padding:3px;
+}
+.theme-btn:hover{box-shadow:var(--shadow-hover);}
+.theme-knob{
+  width:20px;height:20px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),#0d9488);
+  box-shadow:0 1px 6px rgba(0,0,0,.2);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;line-height:1;
+}
+[data-theme="dark"] .theme-knob{transform:translateX(24px);}
+[data-theme="light"] .theme-knob{transform:translateX(0);}
+
+/* ═══════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════ */
+main{max-width:1300px;margin:20px auto;padding:0 16px;}
+.hero{text-align:center;margin-bottom:18px;}
+.hero h2{
+  font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);
+  background:linear-gradient(135deg,var(--teal),#16a34a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{color:var(--dim);font-size:12px;margin-top:4px;padding:0 10px;}
+.live-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.25);
+  color:var(--green);padding:4px 12px;border-radius:16px;
+  font-size:11px;font-family:'DM Mono',monospace;margin-top:8px;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.layout{display:grid;grid-template-columns:390px 1fr;gap:16px;align-items:start;}
+.col-l{display:flex;flex-direction:column;gap:12px;}
+.col-r{display:flex;flex-direction:column;gap:12px;}
+
+/* ═══════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════ */
+.card{
+  background:var(--s1);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+  transition:background .4s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.ctitle{font-family:'Playfair Display',serif;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.ctitle.t{color:var(--teal);}.ctitle.o{color:var(--orange);}.ctitle.s{color:var(--sip);}.ctitle.n{color:var(--text);}
+.slabel{
+  font-size:10px;text-transform:uppercase;letter-spacing:1.1px;
+  color:var(--dimmer);margin:2px 0 9px;padding-bottom:5px;
+  border-bottom:1px solid var(--border);
+  transition:border-color .3s ease;
+}
+
+/* ═══════════════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════════════ */
+.fg{margin-bottom:10px;}
+label{display:block;font-size:11px;color:var(--dim);margin-bottom:3px;font-weight:500;}
+.iw{position:relative;}
+.px,.sx{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-family:'DM Mono',monospace;font-weight:500;pointer-events:none;}
+.px{left:9px;color:var(--teal);}.sx{right:9px;color:var(--dimmer);}
+.po .px{color:var(--orange);}
+input[type=number]{
+  width:100%;
+  background:var(--s2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 36px 8px 24px;
+  color:var(--text);
+  font-size:12px;font-family:'DM Mono',monospace;
+  transition:border-color .15s,background .3s,color .3s;
+  -webkit-appearance:none;
+}
+input[type=number]:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-dim);}
+.po input[type=number]:focus{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange-dim);}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+input[type=number]{-moz-appearance:textfield;}
+.i2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* ═══════════════════════════════════════════════
+   SIP TOGGLE
+═══════════════════════════════════════════════ */
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;
+  background:var(--s2);
+  border:1px solid var(--border);
+  border-radius:9px;
+  transition:background .3s ease,border-color .3s ease;
+}
+.toggle-txt{font-size:12px;font-weight:500;}
+.switch{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{
+  position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;
+  background:var(--dimmer);border-radius:24px;transition:.3s;
+}
+.slider:before{
+  position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;
+  background:#fff;border-radius:50%;transition:.3s;
+}
+.switch input:checked+.slider{background:var(--sip);}
+.switch input:checked+.slider:before{transform:translateX(20px);}
+.sip-fld{overflow:hidden;max-height:0;opacity:0;transition:max-height .3s,opacity .3s;margin-top:0;}
+.sip-fld.open{max-height:120px;opacity:1;margin-top:10px;}
+
+/* ═══════════════════════════════════════════════
+   VERDICT
+═══════════════════════════════════════════════ */
+.verdict{
+  border-radius:var(--radius);padding:18px;text-align:center;
+  transition:all .3s;box-shadow:var(--shadow);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.v-buy{background:var(--teal-dim);border:2px solid var(--teal-b);}
+.v-rent{background:var(--orange-dim);border:2px solid var(--orange-b);}
+.vic{font-size:30px;margin-bottom:5px;}
+.vtitle{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:3px;}
+.v-buy .vtitle{color:var(--teal);}.v-rent .vtitle{color:var(--orange);}
+.vsub{font-size:12px;color:var(--dim);line-height:1.6;}
+.v-buy .vsub strong{color:var(--teal);}.v-rent .vsub strong{color:var(--orange);}
+
+/* ═══════════════════════════════════════════════
+   KPI GRID
+═══════════════════════════════════════════════ */
+.kg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.kg4{grid-template-columns:repeat(4,1fr);}
+.kpi{
+  background:var(--s1);
+  border:1px solid var(--border);
+  border-radius:10px;padding:12px 8px;text-align:center;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .4s,border-color .3s;
+}
+.kl{font-size:9px;color:var(--dimmer);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.kv{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;}
+.ct{color:var(--teal);}.co{color:var(--orange);}.cg{color:var(--green);}.cr{color:var(--red);}.cs{color:var(--sip);}.cgold{color:var(--gold);}
+
+/* ═══════════════════════════════════════════════
+   DETAIL ROWS
+═══════════════════════════════════════════════ */
+.dr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.dr:last-child{border-bottom:none;}
+.dl{color:var(--dim);}.dv{font-family:'DM Mono',monospace;font-weight:500;}
+.dr.tot{border-top:1px solid var(--teal-b);margin-top:4px;padding-top:7px;}
+.dr.tot .dl{color:var(--text);font-weight:600;}
+
+/* ═══════════════════════════════════════════════
+   BREAK-EVEN
+═══════════════════════════════════════════════ */
+.be-box{
+  background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.22);
+  border-radius:10px;padding:12px 14px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+[data-theme="light"] .be-box{background:rgba(21,128,61,.06);border-color:rgba(21,128,61,.2);}
+.be-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:3px;}
+.be-value{font-family:'DM Mono',monospace;font-size:18px;color:var(--green);}
+
+/* ═══════════════════════════════════════════════
+   CHARTS
+═══════════════════════════════════════════════ */
+.chart-wrap{
+  background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;
+  box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:background .4s,border-color .3s;
+}
+.chart-title{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+canvas{max-height:200px;}
+
+/* ═══════════════════════════════════════════════
+   TABLE
+═══════════════════════════════════════════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.tbl th{
+  background:var(--s2);padding:7px 8px;text-align:right;
+  border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--teal);
+  position:sticky;top:0;
+  transition:background .3s;
+}
+.tbl th:first-child{text-align:left;}
+.tbl td{
+  padding:5px 8px;border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace;color:var(--dim);text-align:right;
+  transition:background .3s;
+}
+.tbl td:first-child{text-align:left;color:var(--text);}
+.tbl tr:hover td{background:var(--teal-dim);}
+.wb{color:var(--teal)!important;font-weight:600;}.wr{color:var(--orange)!important;font-weight:600;}
+.ww{color:var(--green)!important;font-weight:700;}
+
+/* ═══════════════════════════════════════════════
+   DISCLAIMER
+═══════════════════════════════════════════════ */
+.disclaimer{
+  margin-top:14px;
+  background:var(--teal-dim);border:1px solid var(--teal-b);
+  border-radius:10px;padding:11px 14px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.disclaimer p{font-size:11px;color:var(--dim);line-height:1.7;}
+.disclaimer strong{color:var(--teal);}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — TABLET
+═══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .kg{grid-template-columns:1fr 1fr;}
+  .kg4{grid-template-columns:1fr 1fr;}
+  .i2{grid-template-columns:1fr 1fr;}
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — MOBILE
+═══════════════════════════════════════════════ */
+@media(max-width:480px){
+  header{padding:10px 14px;gap:10px;}
+  header h1{font-size:14px;}
+  header p{display:none;}
+  .badge{display:none;}
+  .theme-btn{width:44px;height:23px;}
+  .theme-knob{width:17px;height:17px;font-size:10px;}
+  [data-theme="dark"] .theme-knob{transform:translateX(21px);}
+
+  main{padding:0 12px;margin:12px auto;}
+  .hero{margin-bottom:14px;}
+  .hero h2{font-size:20px;}
+  .hero p{font-size:11px;}
+
+  .layout{gap:12px;}
+  .col-l,.col-r{gap:10px;}
+
+  .card{padding:14px 12px;}
+  .i2{grid-template-columns:1fr 1fr;gap:8px;}
+  .fg{margin-bottom:8px;}
+  input[type=number]{padding:7px 32px 7px 22px;font-size:11px;}
+  label{font-size:10px;}
+
+  .kg{grid-template-columns:1fr 1fr;gap:7px;}
+  .kg4{grid-template-columns:1fr 1fr;gap:7px;}
+  .kv{font-size:11px;}
+  .kl{font-size:8px;}
+
+  .verdict{padding:14px;}
+  .vic{font-size:26px;}
+  .vtitle{font-size:16px;}
+  .vsub{font-size:11px;}
+
+  .dr{font-size:11px;}
+  .be-value{font-size:16px;}
+
+  canvas{max-height:180px;}
+
+  .tbl{font-size:10px;}
+  .tbl th,.tbl td{padding:5px 5px;}
+
+  .disclaimer p{font-size:10px;}
+}
+
+@media(max-width:360px){
+  .i2{grid-template-columns:1fr;}
+  .kg4{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">V</div>
+  <div class="header-text">
+    <h1>Viipie Property Tools — Rent vs Buy Pro</h1>
+    <p>Housing Finance Analyst Grade · India</p>
+  </div>
+  <div class="header-right">
+    <span class="badge no-print">TOOL 02</span>
+    <button class="theme-btn no-print" id="themeToggle" title="Toggle Light / Dark" aria-label="Toggle theme">
+      <div class="theme-knob" id="themeKnob">☀️</div>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h2>Rent vs Buy Calculator</h2>
+    <p>Professional-grade: Opportunity cost · Tax deduction · Property tax · Resale value · Net wealth graph</p>
+    <div class="live-pill"><span class="dot"></span>LIVE — Every variable recalculates instantly</div>
+  </div>
+
+  <div class="layout">
+    <!-- ═══ LEFT ═══ -->
+    <div class="col-l">
+
+      <div class="card">
+        <div class="ctitle t">🏠 Buy Scenario</div>
+        <div class="slabel">Property, loan &amp; costs</div>
+        <div class="fg"><label>Property Price</label>
+          <div class="iw"><span class="px">₹</span><input type="number" id="price" value="8000000" oninput="recalc()"><span class="sx">INR</span></div></div>
+        <div class="i2">
+          <div class="fg"><label>Down Payment</label>
+            <div class="iw"><span class="px">₹</span><input type="number" id="down" value="2000000" oninput="recalc()"></div></div>
+          <div class="fg"><label>Loan Rate % p.a.</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="loanRate" value="8.5" step=".1" oninput="recalc()"></div></div>
+          <div class="fg"><label>Loan Tenure (yrs)</label>
+            <div class="iw"><span class="px">⏱</span><input type="number" id="tenure" value="20" min="1" max="30" oninput="recalc()"></div></div>
+          <div class="fg"><label>Appreciation % p.a.</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="apprec" value="7" step=".5" oninput="recalc()"></div></div>
+          <div class="fg"><label>Maintenance (₹/yr)</label>
+            <div class="iw"><span class="px">₹</span><input type="number" id="maint" value="36000" oninput="recalc()"></div></div>
+          <div class="fg"><label>Property Tax (₹/yr)</label>
+            <div class="iw"><span class="px">₹</span><input type="number" id="propTax" value="12000" oninput="recalc()"></div></div>
+        </div>
+        <div class="fg"><label>Home Loan Tax Benefit — Sec 24b (₹/yr, max ₹2L)</label>
+          <div class="iw"><span class="px">₹</span><input type="number" id="taxBenefit" value="200000" oninput="recalc()"><span class="sx">annual</span></div></div>
+        <div class="fg"><label>Stamp Duty + Registration Cost</label>
+          <div class="iw"><span class="px">₹</span><input type="number" id="stampReg" value="560000" oninput="recalc()"><span class="sx">INR</span></div></div>
+      </div>
+
+      <div class="card">
+        <div class="ctitle o">🏢 Rent Scenario</div>
+        <div class="slabel">Current rent &amp; yearly escalation</div>
+        <div class="i2">
+          <div class="fg po"><label>Monthly Rent (now)</label>
+            <div class="iw"><span class="px">₹</span><input type="number" id="rent" value="25000" oninput="recalc()"></div></div>
+          <div class="fg po"><label>Annual Rent Increase %</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="rentIncr" value="5" step=".5" oninput="recalc()"></div></div>
+          <div class="fg po"><label>Return on Down Payment %</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="dpReturn" value="12" step=".5" oninput="recalc()"></div></div>
+          <div class="fg po"><label>Inflation Rate %</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="inflation" value="6" step=".5" oninput="recalc()"></div></div>
+        </div>
+
+        <!-- SIP TOGGLE -->
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-txt">Invest monthly surplus (EMI > Rent) in SIP?</div>
+            <div style="font-size:10px;color:var(--dim);margin-top:2px" id="surplusLine">—</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="sipOn" checked onchange="recalc()"><span class="slider"></span></label>
+        </div>
+        <div class="sip-fld open" id="sipFld">
+          <div class="fg" style="margin-top:10px;margin-bottom:0">
+            <label>SIP Return % p.a. (Equity MF benchmark)</label>
+            <div class="iw"><span class="px" style="color:var(--sip)">%</span><input type="number" id="sipReturn" value="14" step=".5" oninput="recalc()"><span class="sx">p.a.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ctitle n">⚙️ Analysis Settings</div>
+        <div class="slabel">Time horizon &amp; exit costs</div>
+        <div class="fg"><label>Analysis Period (years)</label>
+          <div class="iw"><span class="px">📅</span><input type="number" id="years" value="10" min="1" max="30" oninput="recalc()"></div></div>
+        <div class="i2">
+          <div class="fg"><label>Exit Brokerage % (on sale)</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="exitBroke" value="1" step=".5" oninput="recalc()"></div></div>
+          <div class="fg"><label>Capital Gains Tax % (on profit)</label>
+            <div class="iw"><span class="px">%</span><input type="number" id="exitCGT" value="20" step="1" oninput="recalc()"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ RIGHT ═══ -->
+    <div class="col-r">
+
+      <!-- VERDICT -->
+      <div class="verdict v-buy" id="verdictEl">
+        <div class="vic" id="vic">🏠</div>
+        <div class="vtitle" id="vtitle">—</div>
+        <div class="vsub" id="vsub">—</div>
+      </div>
+
+      <!-- KPIs row 1 -->
+      <div class="kg kg4">
+        <div class="kpi"><div class="kl">Buy Net Wealth</div><div class="kv ct" id="k_buyW">—</div></div>
+        <div class="kpi"><div class="kl">Rent Net Wealth</div><div class="kv co" id="k_rentW">—</div></div>
+        <div class="kpi"><div class="kl">Wealth Difference</div><div class="kv" id="k_diff">—</div></div>
+        <div class="kpi"><div class="kl">Monthly EMI</div><div class="kv cgold" id="k_emi">—</div></div>
+      </div>
+      <!-- KPIs row 2 -->
+      <div class="kg kg4">
+        <div class="kpi"><div class="kl">Total Rent Paid</div><div class="kv cr" id="k_trent">—</div></div>
+        <div class="kpi"><div class="kl">Total Buying Cost</div><div class="kv cr" id="k_tbuy">—</div></div>
+        <div class="kpi"><div class="kl">Resale Value</div><div class="kv ct" id="k_resale">—</div></div>
+        <div class="kpi"><div class="kl">SIP Corpus</div><div class="kv cs" id="k_sip">—</div></div>
+      </div>
+
+      <!-- BREAK-EVEN -->
+      <div class="be-box">
+        <div class="be-label">⏳ Break-even Year — When buying becomes clearly better</div>
+        <div class="be-value" id="be_value">—</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:2px" id="be_sub">—</div>
+      </div>
+
+      <!-- BUY BREAKDOWN -->
+      <div class="card">
+        <div class="ctitle t">🏠 Buy Path — Cost &amp; Wealth</div>
+        <div class="slabel">Total buying cost</div>
+        <div class="dr"><span class="dl">Down Payment + Stamp/Reg</span><span class="dv" id="d_downStamp">—</span></div>
+        <div class="dr"><span class="dl">Total EMI Paid</span><span class="dv" id="d_emiPaid">—</span></div>
+        <div class="dr"><span class="dl">Total Maintenance + Property Tax</span><span class="dv" id="d_maintTax">—</span></div>
+        <div class="dr"><span class="dl">Tax Benefit Received (Sec 24b)</span><span class="dv cg" id="d_taxBen">—</span></div>
+        <div class="dr tot"><span class="dl">Total Buying Cost (gross)</span><span class="dv ct" id="d_totalBuyCost">—</span></div>
+        <div class="slabel" style="margin-top:10px">Wealth at exit</div>
+        <div class="dr"><span class="dl">Property Resale Value</span><span class="dv ct" id="d_resale">—</span></div>
+        <div class="dr"><span class="dl">Outstanding Loan</span><span class="dv cr" id="d_os">—</span></div>
+        <div class="dr"><span class="dl">Exit Costs (brokerage + CGT)</span><span class="dv cr" id="d_exitCost">—</span></div>
+        <div class="dr tot"><span class="dl">Buy Net Wealth</span><span class="dv ct" id="d_buyNet">—</span></div>
+      </div>
+
+      <!-- RENT BREAKDOWN -->
+      <div class="card">
+        <div class="ctitle o">🏢 Rent Path — Cost &amp; Wealth</div>
+        <div class="slabel">Total renting cost</div>
+        <div class="dr"><span class="dl">Total Rent Paid (escalated)</span><span class="dv cr" id="d_rentTotal">—</span></div>
+        <div class="dr"><span class="dl">Month-1 Rent</span><span class="dv" id="d_rent1">—</span></div>
+        <div class="dr"><span class="dl">Rent at Year <span id="d_rentYr">—</span></span><span class="dv" id="d_rentN">—</span></div>
+        <div class="slabel" style="margin-top:10px">Wealth accumulation</div>
+        <div class="dr"><span class="dl">FV of Down Payment Invested</span><span class="dv co" id="d_dpFV">—</span></div>
+        <div class="dr"><span class="dl">SIP Corpus (surplus months)</span><span class="dv cs" id="d_sipCorpus">—</span></div>
+        <div class="dr"><span class="dl">Deficit Opportunity Cost (rent&gt;EMI months)</span><span class="dv cr" id="d_deficitFV">—</span></div>
+        <div class="dr tot"><span class="dl">Rent Net Wealth</span><span class="dv co" id="d_rentNet">—</span></div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="chart-wrap">
+        <div class="chart-title">📈 Net Wealth — Buy vs Rent (Year by Year)</div>
+        <canvas id="chartWealth"></canvas>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">📊 Annual Cost Comparison</div>
+        <canvas id="chartAnnual"></canvas>
+      </div>
+
+      <!-- YEAR TABLE -->
+      <div class="card">
+        <div class="ctitle n">📅 Year-by-Year Comparison Table</div>
+        <div style="overflow-x:auto;max-height:340px;overflow-y:auto;">
+          <table class="tbl">
+            <thead><tr>
+              <th>Year</th><th class="tht">Buy Wealth</th><th class="tho">Rent Wealth</th>
+              <th>Prop Value</th><th>Loan OS</th><th>SIP Corpus</th><th>Rent/mo</th><th>Winner</th>
+            </tr></thead>
+            <tbody id="yrBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- INFLATION ADJUSTED -->
+      <div class="card">
+        <div class="ctitle n">📉 Inflation-Adjusted Wealth (Real Terms @ <span id="inflLbl">6</span>%)</div>
+        <div class="kg">
+          <div class="kpi"><div class="kl">Real Buy Wealth</div><div class="kv ct" id="k_realBuy">—</div></div>
+          <div class="kpi"><div class="kl">Real Rent Wealth</div><div class="kv co" id="k_realRent">—</div></div>
+          <div class="kpi"><div class="kl">Real Diff</div><div class="kv" id="k_realDiff">—</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="disclaimer no-print">
+    <p><strong>⚠️ Model:</strong> Buy Wealth = Resale Value − Outstanding Loan − Exit Costs. Rent Wealth = FV(Down Payment) + SIP Corpus − Deficit FV. <strong>SIP logic is correct:</strong> surplus months only (EMI+Maint > Rent) contribute to SIP; deficit months add opportunity cost. Total Buying Cost = Down + Stamp + EMI paid + Maint + PropTax − Tax Benefits. Total Renting Cost = Σ yearly rent (escalating). Inflation adjustment deflates nominal wealth using (1+inflation)^years. Section 24b tax benefit applied on interest portion only. Not financial advice.</p>
+  </div>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════
+   THEME TOGGLE
+═══════════════════════════════════════════════ */
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+const themeKnob = document.getElementById('themeKnob');
+
+function getTheme(){ return html.getAttribute('data-theme')||'light'; }
+function setTheme(t){
+  html.setAttribute('data-theme', t);
+  themeKnob.textContent = t==='dark' ? '🌙' : '☀️';
+  localStorage.setItem('viipie-theme', t);
+  // Rebuild charts with updated colors
+  if(typeof recalc==='function') recalc();
+}
+themeBtn.addEventListener('click',()=>{
+  setTheme(getTheme()==='light'?'dark':'light');
+});
+// Init from storage
+const saved = localStorage.getItem('viipie-theme');
+if(saved && saved!=='light') setTheme(saved);
+else themeKnob.textContent = '☀️';
+
+/* ═══════════════════════════════════════════════
+   CALCULATOR
+═══════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const g  = id => parseFloat($(id)?.value) || 0;
+
+function fmt(n){
+  if(n===null||n===undefined) return '—';
+  const s=n<0?'-':'',a=Math.abs(n);
+  if(a>=1e7) return s+'₹'+(a/1e7).toFixed(2)+' Cr';
+  if(a>=1e5) return s+'₹'+(a/1e5).toFixed(2)+' L';
+  return s+'₹'+Math.round(a).toLocaleString('en-IN');
+}
+const fmtMo = n => '₹'+Math.round(Math.abs(n)).toLocaleString('en-IN')+'/mo';
+
+function calcEMI(P,ann,yrs){
+  if(P<=0||yrs<=0) return 0;
+  const r=ann/100/12,n=yrs*12;
+  if(r===0) return P/n;
+  return P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+}
+function calcOS(P,ann,yrs,paidMo){
+  if(P<=0||paidMo>=yrs*12) return 0;
+  const r=ann/100/12,E=calcEMI(P,ann,yrs);
+  if(r===0) return Math.max(0,P-E*paidMo);
+  return Math.max(0,P*Math.pow(1+r,paidMo)-E*(Math.pow(1+r,paidMo)-1)/r);
+}
+
+function simulateRent(Y,dp,dpRet,rent0,rentIncr,buyerMo,sipOn,sipRet,maintPA,propTaxPA){
+  const totMo=Y*12,inv_r=sipRet/100/12;
+  const dpFV=dp*Math.pow(1+dpRet/100,Y);
+  let sipCorpus=0,deficitFV=0,totalRent=0;
+  let rc=rent0;
+  for(let m=1;m<=totMo;m++){
+    if(m>1&&(m-1)%12===0) rc*=(1+rentIncr/100);
+    totalRent+=rc;
+    const surplus=(buyerMo+maintPA/12+propTaxPA/12)-rc;
+    const mLeft=totMo-m;
+    if(surplus>0){
+      if(sipOn) sipCorpus+=surplus*Math.pow(1+inv_r,mLeft);
+      else sipCorpus+=surplus;
+    } else if(surplus<0){
+      deficitFV+=Math.abs(surplus)*Math.pow(1+inv_r,mLeft);
+    }
+  }
+  const rentAtY=rent0*Math.pow(1+rentIncr/100,Y-1);
+  const rentW=dpFV+sipCorpus-deficitFV;
+  return {dpFV,sipCorpus,deficitFV,rentW,totalRent,rentAtY};
+}
+
+let chartW=null,chartA=null;
+function destroyChart(c){if(c)c.destroy();return null;}
+
+function getChartColors(){
+  const isDark=getTheme()==='dark';
+  return {
+    tick: isDark?'#6e88a6':'#5a7494',
+    grid: isDark?'rgba(30,46,66,.5)':'rgba(100,140,180,.15)',
+    buy:  isDark?'#2dd4bf':'#0d9488',
+    rent: isDark?'#fb923c':'#c2410c',
+    buyFill: isDark?'rgba(45,212,191,.08)':'rgba(13,148,136,.08)',
+    rentFill:isDark?'rgba(251,146,60,.06)':'rgba(194,65,12,.06)'
+  };
+}
+
+function recalc(){
+  const price=g('price'),down=g('down'),rate=g('loanRate'),tenure=g('tenure');
+  const apprec=g('apprec'),maint=g('maint'),propTax=g('propTax');
+  const taxBenefit=g('taxBenefit'),stampReg=g('stampReg');
+  const rent0=g('rent'),rentIncr=g('rentIncr'),dpReturn=g('dpReturn');
+  const sipOn=$('sipOn').checked,sipRet=g('sipReturn'),inflation=g('inflation');
+  const years=Math.max(1,Math.min(30,Math.round(g('years'))));
+  const exitBroke=g('exitBroke'),exitCGT=g('exitCGT');
+  if(!price||!down) return;
+
+  const loan=Math.max(0,price-down);
+  const emi=calcEMI(loan,rate,tenure);
+  const buyerMo=emi+maint/12+propTax/12;
+
+  /* BUY at N years */
+  const resale=price*Math.pow(1+apprec/100,years);
+  const os=calcOS(loan,rate,tenure,years*12);
+  const exitBrokeAmt=resale*exitBroke/100;
+  const capitalGain=Math.max(0,resale-price);
+  const cgtAmt=capitalGain*exitCGT/100;
+  const netResale=resale-exitBrokeAmt-cgtAmt;
+  const buyNetWealth=netResale-os;
+
+  const totalEMIPaid=emi*Math.min(years*12,tenure*12);
+  const totalMaintPaid=(maint+propTax)*years;
+  const totalTaxBen=taxBenefit*years;
+  const totalBuyCost=down+stampReg+totalEMIPaid+totalMaintPaid-totalTaxBen;
+
+  /* RENT at N years */
+  const R=simulateRent(years,down,dpReturn,rent0,rentIncr,emi,sipOn,sipRet,maint,propTax);
+  const totalRentCost=R.totalRent;
+
+  const diff=buyNetWealth-R.rentW;
+  const isBuy=diff>=0;
+  const inflFactor=Math.pow(1+inflation/100,years);
+
+  /* SIP toggle UI */
+  const mo1Sur=buyerMo-rent0;
+  $('surplusLine').textContent=mo1Sur>0
+    ?`Month-1 surplus: +${fmtMo(mo1Sur)} → invests in SIP`
+    :`Month-1: Rent > Buyer outflow by ${fmtMo(-mo1Sur)} → no SIP yet`;
+  $('sipFld').classList.toggle('open',sipOn);
+
+  /* VERDICT */
+  $('verdictEl').className='verdict '+(isBuy?'v-buy':'v-rent');
+  $('vic').textContent=isBuy?'🏠':'🏢';
+  $('vtitle').textContent=isBuy?'BUYING is Better':'RENTING is Better';
+  $('vsub').innerHTML=isBuy
+    ?`After <strong>${years} years</strong>, buying leaves you <strong>${fmt(Math.abs(diff))}</strong> wealthier than renting.`
+    :`After <strong>${years} years</strong>, renting+investing leaves you <strong>${fmt(Math.abs(diff))}</strong> wealthier than buying.`;
+
+  /* KPIs */
+  $('k_buyW').textContent=fmt(buyNetWealth);$('k_rentW').textContent=fmt(R.rentW);
+  $('k_diff').textContent=(diff>=0?'+':'')+fmt(diff);
+  $('k_diff').className='kv '+(diff>=0?'cg':'cr');
+  $('k_emi').textContent=fmtMo(emi);$('k_trent').textContent=fmt(totalRentCost);
+  $('k_tbuy').textContent=fmt(totalBuyCost);$('k_resale').textContent=fmt(resale);
+  $('k_sip').textContent=fmt(R.sipCorpus);
+
+  /* BREAK-EVEN */
+  let beYear=null;
+  for(let y=1;y<=years;y++){
+    const bw=price*Math.pow(1+apprec/100,y)-calcOS(loan,rate,tenure,y*12)
+      -(price*Math.pow(1+apprec/100,y)*exitBroke/100+Math.max(0,price*Math.pow(1+apprec/100,y)-price)*exitCGT/100);
+    const Ry=simulateRent(y,down,dpReturn,rent0,rentIncr,emi,sipOn,sipRet,maint,propTax);
+    if(bw>=Ry.rentW&&beYear===null) beYear=y;
+  }
+  $('be_value').textContent=beYear?'Year '+beYear:'Beyond analysis period';
+  $('be_sub').textContent=beYear
+    ?`From Year ${beYear} onwards, buying builds more wealth than renting+investing (at current inputs)`
+    :`Within ${years} years, renting stays ahead — consider a longer hold or better rent deal`;
+
+  /* DETAIL ROWS */
+  $('d_downStamp').textContent=fmt(down+stampReg);
+  $('d_emiPaid').textContent=fmt(totalEMIPaid);
+  $('d_maintTax').textContent=fmt(totalMaintPaid);
+  $('d_taxBen').textContent=fmt(totalTaxBen);
+  $('d_totalBuyCost').textContent=fmt(totalBuyCost);
+  $('d_resale').textContent=fmt(resale);
+  $('d_os').textContent=fmt(os);
+  $('d_exitCost').textContent=fmt(exitBrokeAmt+cgtAmt);
+  $('d_buyNet').textContent=fmt(buyNetWealth);
+  $('d_rentTotal').textContent=fmt(totalRentCost);
+  $('d_rent1').textContent=fmtMo(rent0);
+  $('d_rentYr').textContent=years;
+  $('d_rentN').textContent=fmtMo(R.rentAtY);
+  $('d_dpFV').textContent=fmt(R.dpFV);
+  $('d_sipCorpus').textContent=fmt(R.sipCorpus);
+  $('d_deficitFV').textContent=R.deficitFV>0?'-'+fmt(R.deficitFV):'₹0';
+  $('d_rentNet').textContent=fmt(R.rentW);
+
+  /* INFLATION ADJUSTED */
+  $('inflLbl').textContent=inflation;
+  $('k_realBuy').textContent=fmt(buyNetWealth/inflFactor);
+  $('k_realRent').textContent=fmt(R.rentW/inflFactor);
+  $('k_realDiff').textContent=(diff>=0?'+':'')+fmt((buyNetWealth-R.rentW)/inflFactor);
+  $('k_realDiff').className='kv '+(diff>=0?'cg':'cr');
+
+  /* YEAR TABLE & CHART DATA */
+  const labels=[],buyArr=[],rentArr=[],annBuyCost=[],annRentCost=[];
+  const tbody=$('yrBody'); tbody.innerHTML='';
+
+  for(let y=1;y<=years;y++){
+    const bResale=price*Math.pow(1+apprec/100,y);
+    const bOS=calcOS(loan,rate,tenure,y*12);
+    const bExit=bResale*exitBroke/100+Math.max(0,bResale-price)*exitCGT/100;
+    const bw=bResale-bOS-bExit;
+    const Ry=simulateRent(y,down,dpReturn,rent0,rentIncr,emi,sipOn,sipRet,maint,propTax);
+    const rw=Ry.rentW;
+    const rentY=rent0*Math.pow(1+rentIncr/100,y-1)*12;
+    const annBuy=emi*12+(maint+propTax)-taxBenefit;
+    const annRent=rentY;
+    labels.push('Yr '+y);buyArr.push(bw);rentArr.push(rw);
+    annBuyCost.push(annBuy);annRentCost.push(annRent);
+    const isBuyY=bw>=rw;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>Year ${y}</td>
+      <td class="${isBuyY?'wb':''}">${fmt(bw)}</td>
+      <td class="${!isBuyY?'wr':''}">${fmt(rw)}</td>
+      <td>${fmt(bResale)}</td>
+      <td class="cr">${fmt(bOS)}</td>
+      <td class="${sipOn?'cs':''}">${fmt(Ry.sipCorpus)}</td>
+      <td>${fmtMo(Ry.rentAtY)}</td>
+      <td class="ww">${isBuyY?'🏠 Buy':'🏢 Rent'}</td>`;
+    tbody.appendChild(tr);
+  }
+
+  /* CHARTS */
+  const cc=getChartColors();
+  const CDEFS={
+    plugins:{legend:{labels:{color:cc.tick,font:{size:11}}}},
+    scales:{
+      x:{ticks:{color:cc.tick,font:{size:10}},grid:{color:cc.grid}},
+      y:{ticks:{color:cc.tick,font:{size:10},callback:v=>v>=1e7?'₹'+(v/1e7).toFixed(1)+'Cr':v>=1e5?'₹'+(v/1e5).toFixed(0)+'L':'₹'+v},grid:{color:cc.grid}}
+    }
+  };
+
+  chartW=destroyChart(chartW);
+  chartW=new Chart($('chartWealth').getContext('2d'),{type:'line',
+    data:{labels,datasets:[
+      {label:'Buy Net Wealth',data:buyArr,borderColor:cc.buy,backgroundColor:cc.buyFill,fill:true,tension:.4,pointRadius:3},
+      {label:'Rent Net Wealth',data:rentArr,borderColor:cc.rent,backgroundColor:cc.rentFill,fill:true,tension:.4,pointRadius:3}
+    ]},options:{...CDEFS,responsive:true,maintainAspectRatio:true}});
+
+  chartA=destroyChart(chartA);
+  chartA=new Chart($('chartAnnual').getContext('2d'),{type:'bar',
+    data:{labels,datasets:[
+      {label:'Annual Buy Cost (net EMI+Maint-TaxBen)',data:annBuyCost,backgroundColor:cc.buyFill.replace('.08','.5').replace('.06','.5')+''},
+      {label:'Annual Rent',data:annRentCost,backgroundColor:cc.rentFill.replace('.06','.5')+''}
+    ]},options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:cc.tick,font:{size:11}}}},
+      scales:{
+        x:{ticks:{color:cc.tick},grid:{color:cc.grid}},
+        y:{ticks:{color:cc.tick,callback:v=>v>=1e5?'₹'+(v/1e5).toFixed(0)+'L':'₹'+v},grid:{color:cc.grid}}
+      }
+    }});
+}
+
+$('sipOn').addEventListener('change',()=>{$('sipFld').classList.toggle('open',$('sipOn').checked);recalc();});
+document.querySelectorAll('input[type=number]').forEach(el=>el.addEventListener('input',recalc));
+recalc();
+</script>
+</body>
+</html>

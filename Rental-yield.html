@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Rental Yield Calculator India | Viipie Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══ LIGHT ═══ */
+:root,[data-theme="light"]{
+  --bg-body:#edfaf4;
+  --s1:rgba(255,255,255,0.86);--s2:rgba(240,252,246,0.72);
+  --border:rgba(100,180,130,.28);--border-strong:rgba(5,150,105,.4);
+  --emerald:#059669;--emerald-light:#34d399;--emerald-dim:rgba(5,150,105,.1);
+  --text:#0a2018;--dim:#3d7a5c;--dimmer:#9dcfb8;
+  --yellow:#b45309;--red:#dc2626;
+  --shadow:0 4px 24px rgba(10,80,50,.1),0 1px 4px rgba(10,80,50,.06);
+  --radius:14px;
+}
+/* ═══ DARK ═══ */
+[data-theme="dark"]{
+  --bg-body:#0c1a16;
+  --s1:rgba(17,34,28,0.92);--s2:rgba(22,43,35,0.85);
+  --border:rgba(30,58,46,.7);--border-strong:rgba(52,211,153,.28);
+  --emerald:#34d399;--emerald-light:#6ee7b7;--emerald-dim:rgba(52,211,153,.12);
+  --text:#e2f0ec;--dim:#7fa99a;--dimmer:#2d4d3e;
+  --yellow:#fbbf24;--red:#f87171;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 6px rgba(0,0,0,.3);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-body);color:var(--text);min-height:100vh;transition:background .4s,color .3s;}
+
+/* PREMIUM BG */
+[data-theme="light"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 8% 5%,rgba(110,231,183,.4) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 45% at 92% 12%,rgba(52,211,153,.3) 0%,transparent 50%),
+    radial-gradient(ellipse 55% 40% at 50% 95%,rgba(16,185,129,.22) 0%,transparent 50%),
+    linear-gradient(150deg,#f0fdf9 0%,#f9fffc 40%,#ecfdf5 70%,#f0fdf9 100%);}
+[data-theme="light"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");}
+[data-theme="dark"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 5% 5%,rgba(52,211,153,.09) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 95% 10%,rgba(5,150,105,.07) 0%,transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 95%,rgba(52,211,153,.06) 0%,transparent 50%),
+    linear-gradient(160deg,#0c1a16 0%,#0e2018 35%,#0c1a16 100%);}
+[data-theme="dark"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+header,main{position:relative;z-index:1;}
+
+/* HEADER */
+header{background:var(--s1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.logo-badge{width:38px;height:38px;background:linear-gradient(135deg,var(--emerald-light),var(--emerald));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:17px;flex-shrink:0;box-shadow:0 2px 10px rgba(5,150,105,.35);}
+.header-text{flex:1;min-width:0;}
+header h1{font-family:'Playfair Display',serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+header p{font-size:10px;color:var(--dim);margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tool-badge{background:var(--emerald-dim);border:1px solid var(--emerald);color:var(--emerald);padding:3px 10px;border-radius:16px;font-size:10px;font-family:'DM Mono',monospace;}
+.theme-btn{width:50px;height:26px;background:var(--s2);border:1px solid var(--border-strong);border-radius:13px;cursor:pointer;display:flex;align-items:center;padding:3px;flex-shrink:0;transition:all .3s;}
+.theme-knob{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--emerald-light),var(--emerald));box-shadow:0 1px 6px rgba(0,0,0,.2);transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;}
+[data-theme="dark"] .theme-knob{transform:translateX(24px);}[data-theme="light"] .theme-knob{transform:translateX(0);}
+
+/* MAIN */
+main{max-width:940px;margin:20px auto;padding:0 16px;}
+.hero{text-align:center;margin-bottom:20px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,30px);background:linear-gradient(135deg,var(--emerald-light),var(--emerald));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.hero p{color:var(--dim);font-size:12px;}
+
+.layout{display:grid;grid-template-columns:360px 1fr;gap:18px;}
+.card{background:var(--s1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.card h3{font-family:'Playfair Display',serif;font-size:15px;color:var(--emerald);margin-bottom:16px;}
+.form-group{margin-bottom:13px;}
+label{display:block;font-size:11px;color:var(--dim);margin-bottom:4px;font-weight:500;}
+.input-wrap{position:relative;}
+.input-prefix,.input-suffix{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-family:'DM Mono',monospace;font-weight:500;pointer-events:none;}
+.input-prefix{left:9px;color:var(--emerald);}
+.input-suffix{right:9px;color:var(--dimmer);}
+input[type="number"]{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 36px 8px 26px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;transition:border-color .2s,background .3s;-webkit-appearance:none;-moz-appearance:textfield;}
+input[type="number"]:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 2px var(--emerald-dim);}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+.btn-calc{width:100%;padding:11px;background:linear-gradient(135deg,var(--emerald-light),var(--emerald));color:#0a2018;font-weight:700;font-size:13px;border:none;border-radius:9px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,transform .1s;margin-top:6px;}
+.btn-calc:hover{opacity:.9;transform:translateY(-1px);}
+
+/* Yield display */
+.yield-display{display:flex;gap:14px;margin-bottom:18px;}
+.yield-box{flex:1;border-radius:12px;padding:18px;text-align:center;}
+.yield-gross{background:var(--emerald-dim);border:2px solid var(--border-strong);}
+.yield-net{background:rgba(251,191,36,.08);border:2px solid rgba(251,191,36,.3);}
+[data-theme="light"] .yield-net{background:rgba(180,83,9,.07);border-color:rgba(180,83,9,.25);}
+.yield-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.yield-gross .yield-label{color:var(--emerald);}
+.yield-net .yield-label{color:var(--yellow);}
+.yield-value{font-family:'DM Mono',monospace;font-size:34px;font-weight:500;}
+.yield-gross .yield-value{color:var(--emerald);}
+.yield-net .yield-value{color:var(--yellow);}
+.yield-tag{font-size:11px;margin-top:5px;padding:3px 8px;border-radius:10px;display:inline-block;}
+
+.section-title{font-size:10px;color:var(--dimmer);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.detail-row:last-child{border-bottom:none;}
+.detail-label{color:var(--dim);}
+.detail-value{font-family:'DM Mono',monospace;font-weight:500;}
+.rating{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;margin-bottom:14px;}
+.rating-excellent{background:var(--emerald-dim);border:1px solid var(--border-strong);color:var(--emerald);}
+.rating-good{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);}
+.rating-poor{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);color:var(--red);}
+[data-theme="light"] .rating-good{background:rgba(180,83,9,.08);border-color:rgba(180,83,9,.25);color:var(--yellow);}
+
+/* Benchmark */
+.benchmark{margin-top:4px;}
+.bm-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bm-city{width:90px;font-size:12px;color:var(--dim);flex-shrink:0;}
+.bm-track{flex:1;background:var(--s2);border-radius:4px;height:16px;overflow:hidden;position:relative;}
+.bm-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--emerald-light),var(--emerald));display:flex;align-items:center;padding-left:6px;font-size:10px;color:#0a2018;font-weight:600;font-family:'DM Mono',monospace;transition:width .8s ease;}
+.bm-yours{background:linear-gradient(90deg,var(--yellow),#d97706)!important;color:#fff!important;}
+.bm-pct{width:34px;font-size:11px;font-family:'DM Mono',monospace;color:var(--dim);text-align:right;flex-shrink:0;}
+
+.disclaimer{margin-top:18px;background:var(--emerald-dim);border:1px solid var(--border-strong);border-radius:10px;padding:12px 16px;}
+.disclaimer p{font-size:11px;color:var(--dim);line-height:1.7;}
+.disclaimer strong{color:var(--emerald);}
+#placeholderCard{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:180px;}
+
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr;}
+  .yield-display{flex-direction:column;}
+  header p{display:none;}.tool-badge{display:none;}
+  header h1{font-size:14px;}
+  main{padding:0 12px;margin:12px auto;}
+  .card{padding:16px 14px;}
+  .hero h2{font-size:20px;}
+  .bm-city{width:75px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-badge">V</div>
+  <div class="header-text"><h1>Viipie Property Tools</h1><p>India Real Estate Intelligence Suite</p></div>
+  <div class="header-right">
+    <span class="tool-badge">TOOL 04</span>
+    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+      <div class="theme-knob" id="themeKnob">☀️</div>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h2>Rental Yield Calculator</h2>
+    <p>Instantly know gross and net yield — benchmark against top Indian cities</p>
+  </div>
+
+  <div class="layout">
+    <div class="card">
+      <h3>📥 Property Details</h3>
+      <div class="form-group"><label>Property Purchase Price</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="price" value="8000000"><span class="input-suffix">INR</span></div></div>
+      <div class="form-group"><label>Expected Monthly Rent</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="rent" value="25000"><span class="input-suffix">/ mo</span></div></div>
+      <div class="form-group"><label>Annual Maintenance Charges</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="maint" value="36000"><span class="input-suffix">p.a.</span></div></div>
+      <div class="form-group"><label>Annual Society / HOA Charges</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="society" value="24000"><span class="input-suffix">p.a.</span></div></div>
+      <div class="form-group"><label>Annual Property Tax</label><div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="tax" value="12000"><span class="input-suffix">p.a.</span></div></div>
+      <div class="form-group"><label>Estimated Vacancy (months/year)</label><div class="input-wrap"><span class="input-prefix">🗓</span><input type="number" id="vacancy" value="1" min="0" max="12" step="0.5"><span class="input-suffix">mo</span></div></div>
+      <button class="btn-calc" onclick="calculate()">📊 Calculate Yield</button>
+    </div>
+
+    <div>
+      <div class="card" id="resultsCard" style="display:none">
+        <h3>📊 Yield Analysis</h3>
+        <div id="ratingEl"></div>
+        <div class="yield-display">
+          <div class="yield-box yield-gross">
+            <div class="yield-label">Gross Rental Yield</div>
+            <div class="yield-value" id="grossYield">—</div>
+            <div class="yield-tag" style="background:var(--emerald-dim);color:var(--emerald)">Before expenses</div>
+          </div>
+          <div class="yield-box yield-net">
+            <div class="yield-label">Net Rental Yield</div>
+            <div class="yield-value" id="netYield">—</div>
+            <div class="yield-tag" style="background:rgba(251,191,36,.1);color:var(--yellow)">After all costs</div>
+          </div>
+        </div>
+        <div class="section-title">Detailed Breakdown</div>
+        <div class="detail-row"><span class="detail-label">Gross Annual Rent</span><span class="detail-value" id="grossRent">—</span></div>
+        <div class="detail-row"><span class="detail-label">Vacancy Loss</span><span class="detail-value" id="vacLoss">—</span></div>
+        <div class="detail-row"><span class="detail-label">Effective Annual Rent</span><span class="detail-value" id="effRent">—</span></div>
+        <div class="detail-row"><span class="detail-label">Total Annual Expenses</span><span class="detail-value" id="expenses">—</span></div>
+        <div class="detail-row"><span class="detail-label">Net Annual Income</span><span class="detail-value" id="netIncome">—</span></div>
+        <div class="detail-row"><span class="detail-label">Monthly Net Income</span><span class="detail-value" id="netMonthly">—</span></div>
+        <div class="detail-row"><span class="detail-label">Gross Yield</span><span class="detail-value ct" id="gYield2">—</span></div>
+        <div class="detail-row"><span class="detail-label">Net Yield</span><span class="detail-value" id="nYield2">—</span></div>
+      </div>
+
+      <div class="card" style="margin-top:14px" id="benchCard" style="display:none">
+        <h3>🏙️ City Benchmark Comparison</h3>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:14px">Average gross rental yields by city (2024)</p>
+        <div class="benchmark" id="bmContainer"></div>
+      </div>
+
+      <div class="card" id="placeholderCard">
+        <div style="font-size:48px;opacity:0.2">🏘️</div>
+        <p style="color:var(--dim);text-align:center;font-size:13px">Enter property details<br>to see yield analysis</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer" style="margin-top:18px">
+    <p><strong>⚠️ Disclaimer:</strong> Rental yield calculations are estimates based on inputs provided. City benchmarks are indicative averages and do not represent guaranteed returns. Income tax on rental income and applicable TDS are not factored in. Always conduct thorough due diligence before any property investment.</p>
+  </div>
+</main>
+
+<script>
+// THEME
+const html=document.documentElement;
+const themeKnob=document.getElementById('themeKnob');
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const t=html.getAttribute('data-theme')==='light'?'dark':'light';
+  html.setAttribute('data-theme',t);themeKnob.textContent=t==='dark'?'🌙':'☀️';
+  localStorage.setItem('viipie-theme-04',t);
+});
+const saved=localStorage.getItem('viipie-theme-04');
+if(saved&&saved!=='light'){html.setAttribute('data-theme',saved);themeKnob.textContent='🌙';}
+
+const cityBenchmarks=[['Mumbai',2.8],['Delhi NCR',3.2],['Bangalore',3.8],['Hyderabad',3.5],['Chennai',3.3],['Pune',3.6],['Kolkata',2.9],['Ahmedabad',3.1],['Tier-2 Avg',4.2]];
+
+function fmt(n){if(Math.abs(n)>=1e7)return'₹'+(n/1e7).toFixed(2)+' Cr';if(Math.abs(n)>=1e5)return'₹'+(n/1e5).toFixed(2)+' L';return'₹'+Math.round(n).toLocaleString('en-IN');}
+
+function calculate(){
+  const price=parseFloat(document.getElementById('price').value)||0;
+  const rent=parseFloat(document.getElementById('rent').value)||0;
+  const maint=parseFloat(document.getElementById('maint').value)||0;
+  const society=parseFloat(document.getElementById('society').value)||0;
+  const tax=parseFloat(document.getElementById('tax').value)||0;
+  const vacancy=parseFloat(document.getElementById('vacancy').value)||0;
+  if(!price||!rent){alert('Enter property price and rent.');return;}
+  const grossAnnual=rent*12,vacancyLoss=rent*vacancy,effectiveRent=grossAnnual-vacancyLoss;
+  const totalExpenses=maint+society+tax,netIncome=effectiveRent-totalExpenses;
+  const grossYield=(grossAnnual/price)*100,netYield=(netIncome/price)*100;
+  document.getElementById('placeholderCard').style.display='none';
+  document.getElementById('resultsCard').style.display='block';
+  document.getElementById('benchCard').style.display='block';
+  document.getElementById('grossYield').textContent=grossYield.toFixed(2)+'%';
+  document.getElementById('netYield').textContent=netYield.toFixed(2)+'%';
+  document.getElementById('grossRent').textContent=fmt(grossAnnual);
+  document.getElementById('vacLoss').textContent=fmt(vacancyLoss);
+  document.getElementById('effRent').textContent=fmt(effectiveRent);
+  document.getElementById('expenses').textContent=fmt(totalExpenses);
+  document.getElementById('netIncome').textContent=fmt(netIncome);
+  document.getElementById('netMonthly').textContent=fmt(netIncome/12)+'/mo';
+  document.getElementById('gYield2').textContent=grossYield.toFixed(2)+'%';
+  document.getElementById('nYield2').textContent=netYield.toFixed(2)+'%';
+  let ratingClass,ratingText;
+  if(grossYield>=4){ratingClass='rating-excellent';ratingText='✅ Excellent Yield — Above market average';}
+  else if(grossYield>=3){ratingClass='rating-good';ratingText='⚡ Good Yield — Around market average';}
+  else{ratingClass='rating-poor';ratingText='⚠️ Below Average — Consider reviewing pricing';}
+  document.getElementById('ratingEl').innerHTML=`<div class="rating ${ratingClass}">${ratingText}</div>`;
+  const maxYield=Math.max(grossYield,...cityBenchmarks.map(c=>c[1]),5);
+  const bm=document.getElementById('bmContainer');bm.innerHTML='';
+  const yourRow=document.createElement('div');yourRow.className='bm-row';
+  const w=(grossYield/maxYield*100).toFixed(1);
+  yourRow.innerHTML=`<div class="bm-city" style="color:var(--text);font-weight:600">Your Property</div><div class="bm-track"><div class="bm-fill bm-yours" style="width:${w}%">${grossYield.toFixed(1)}%</div></div><div class="bm-pct" style="color:var(--yellow)">${grossYield.toFixed(1)}%</div>`;
+  bm.appendChild(yourRow);
+  cityBenchmarks.forEach(([city,y])=>{
+    const w2=(y/maxYield*100).toFixed(1);
+    const row=document.createElement('div');row.className='bm-row';
+    row.innerHTML=`<div class="bm-city">${city}</div><div class="bm-track"><div class="bm-fill" style="width:${w2}%">${y}%</div></div><div class="bm-pct">${y}%</div>`;
+    bm.appendChild(row);
+  });
+}
+calculate();
+</script>
+</body>
+</html>

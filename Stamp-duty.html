@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Stamp Duty & Registration Calculator India | Viipie Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══ LIGHT ═══ */
+:root,[data-theme="light"]{
+  --bg-body:#f3f0fb;
+  --s1:rgba(255,255,255,0.85);--s2:rgba(248,246,255,0.7);
+  --border:rgba(150,130,200,.3);--border-strong:rgba(124,58,237,.4);
+  --purple:#7c3aed;--purple-light:#a78bfa;--purple-dim:rgba(124,58,237,.1);
+  --text:#1a1030;--dim:#6b5b8a;--dimmer:#bbaee0;
+  --green:#15803d;--gold:#b45309;
+  --shadow:0 4px 24px rgba(80,50,150,.1),0 1px 4px rgba(80,50,150,.06);
+  --radius:14px;
+}
+/* ═══ DARK ═══ */
+[data-theme="dark"]{
+  --bg-body:#0e1420;
+  --s1:rgba(21,30,46,0.92);--s2:rgba(26,37,56,0.85);
+  --border:rgba(37,48,70,.7);--border-strong:rgba(167,139,250,.3);
+  --purple:#a78bfa;--purple-light:#c4b5fd;--purple-dim:rgba(167,139,250,.12);
+  --text:#e2e8f0;--dim:#94a3b8;--dimmer:#3d4e66;
+  --green:#4ade80;--gold:#fbbf24;
+  --shadow:0 4px 24px rgba(0,0,0,.4),0 1px 6px rgba(0,0,0,.3);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-body);color:var(--text);min-height:100vh;transition:background .4s,color .3s;}
+
+/* PREMIUM BG */
+[data-theme="light"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 10% 5%,rgba(196,181,253,.45) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 45% at 92% 12%,rgba(167,139,250,.3) 0%,transparent 50%),
+    radial-gradient(ellipse 55% 40% at 50% 95%,rgba(139,92,246,.2) 0%,transparent 50%),
+    linear-gradient(150deg,#f5f0ff 0%,#faf8ff 40%,#f0ecff 70%,#f8f5ff 100%);}
+[data-theme="light"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.022'/%3E%3C/svg%3E");}
+[data-theme="dark"] body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 5% 5%,rgba(167,139,250,.09) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 95% 10%,rgba(124,58,237,.07) 0%,transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 95%,rgba(167,139,250,.06) 0%,transparent 50%),
+    linear-gradient(160deg,#0e1420 0%,#101828 35%,#0e1420 100%);}
+[data-theme="dark"] body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+header,main{position:relative;z-index:1;}
+
+/* HEADER */
+header{background:var(--s1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.logo-badge{width:38px;height:38px;background:linear-gradient(135deg,var(--purple-light),var(--purple));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:17px;flex-shrink:0;box-shadow:0 2px 10px rgba(124,58,237,.35);}
+.header-text{flex:1;min-width:0;}
+header h1{font-family:'Playfair Display',serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+header p{font-size:10px;color:var(--dim);margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tool-badge{background:var(--purple-dim);border:1px solid var(--purple);color:var(--purple);padding:3px 10px;border-radius:16px;font-size:10px;font-family:'DM Mono',monospace;}
+.theme-btn{width:50px;height:26px;background:var(--s2);border:1px solid var(--border-strong);border-radius:13px;cursor:pointer;display:flex;align-items:center;padding:3px;flex-shrink:0;transition:all .3s;}
+.theme-knob{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--purple-light),var(--purple));box-shadow:0 1px 6px rgba(0,0,0,.2);transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;}
+[data-theme="dark"] .theme-knob{transform:translateX(24px);}[data-theme="light"] .theme-knob{transform:translateX(0);}
+
+/* MAIN */
+main{max-width:1100px;margin:20px auto;padding:0 16px;}
+.hero{text-align:center;margin-bottom:22px;}
+.hero h2{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,30px);background:linear-gradient(135deg,var(--purple-light),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.hero p{color:var(--dim);font-size:12px;}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.card{background:var(--s1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:background .4s,border-color .3s;}
+.card h3{font-family:'Playfair Display',serif;font-size:15px;color:var(--purple);margin-bottom:16px;}
+.form-group{margin-bottom:13px;}
+label{display:block;font-size:11px;color:var(--dim);margin-bottom:4px;font-weight:500;}
+.input-wrap{position:relative;}
+.input-prefix,.input-suffix{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;font-family:'DM Mono',monospace;font-weight:500;pointer-events:none;}
+.input-prefix{left:9px;color:var(--purple);}
+.input-suffix{right:9px;color:var(--dimmer);}
+input[type="number"]{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 36px 8px 26px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;transition:border-color .2s,background .3s;-webkit-appearance:none;-moz-appearance:textfield;}
+input[type="number"]:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 2px var(--purple-dim);}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+select{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 36px 8px 12px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;appearance:none;-webkit-appearance:none;transition:border-color .2s,background .3s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23a78bfa' d='M5 7L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+select:focus{outline:none;border-color:var(--purple);}
+.radio-group{display:flex;gap:8px;}
+.radio-btn{flex:1;padding:8px 6px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:12px;color:var(--dim);transition:all .2s;background:var(--s2);}
+.radio-btn.active{border-color:var(--purple);background:var(--purple-dim);color:var(--purple);}
+.btn-calc{width:100%;padding:11px;background:linear-gradient(135deg,var(--purple-light),var(--purple));color:#fff;font-weight:700;font-size:13px;border:none;border-radius:9px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,transform .1s;margin-top:6px;}
+.btn-calc:hover{opacity:.9;transform:translateY(-1px);}
+
+/* KPI big */
+.kpi-big{background:var(--purple-dim);border:2px solid var(--border-strong);border-radius:12px;padding:18px;text-align:center;margin-bottom:16px;}
+.kpi-big-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.kpi-big-value{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--purple);}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.kpi{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;transition:background .3s,border-color .3s;}
+.kpi-label{font-size:9px;color:var(--dimmer);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.kpi-value{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:var(--purple);}
+.section-title{font-size:10px;color:var(--dimmer);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);margin-top:14px;}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.detail-row:last-child{border-bottom:none;}
+.detail-label{color:var(--dim);}
+.detail-value{font-family:'DM Mono',monospace;font-weight:500;}
+.state-note{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--gold);margin-bottom:12px;line-height:1.6;}
+[data-theme="light"] .state-note{background:rgba(180,83,9,.07);border-color:rgba(180,83,9,.25);color:var(--gold);}
+
+/* Rates table */
+.rates-table{width:100%;border-collapse:collapse;font-size:11px;}
+.rates-table th{background:var(--s2);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;color:var(--purple);position:sticky;top:0;transition:background .3s;}
+.rates-table td{padding:6px 10px;border-bottom:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;}
+.rates-table tr:hover td{background:var(--purple-dim);}
+.highlight-row td{color:var(--purple)!important;font-weight:500;}
+.disclaimer{margin-top:18px;background:var(--purple-dim);border:1px solid var(--border-strong);border-radius:10px;padding:12px 16px;}
+.disclaimer p{font-size:11px;color:var(--dim);line-height:1.7;}
+.disclaimer strong{color:var(--purple);}
+
+#placeholderCard{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:200px;}
+
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr;}
+  header p{display:none;}.tool-badge{display:none;}
+  header h1{font-size:14px;}
+  main{padding:0 12px;margin:12px auto;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
+  .card{padding:16px 14px;}
+  .hero h2{font-size:20px;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-badge">V</div>
+  <div class="header-text"><h1>Viipie Property Tools</h1><p>India Real Estate Intelligence Suite</p></div>
+  <div class="header-right">
+    <span class="tool-badge">TOOL 03</span>
+    <button class="theme-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+      <div class="theme-knob" id="themeKnob">☀️</div>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h2>Stamp Duty &amp; Registration Calculator</h2>
+    <p>Accurate charges for all 28 Indian states — updated rates, gender concessions included</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>📋 Property Details</h3>
+      <div class="form-group"><label>State / UT</label>
+        <select id="state" onchange="updateRateInfo()">
+          <option value="MH">Maharashtra</option><option value="DL">Delhi</option><option value="KA">Karnataka</option>
+          <option value="TN">Tamil Nadu</option><option value="TS">Telangana</option><option value="AP">Andhra Pradesh</option>
+          <option value="UP">Uttar Pradesh</option><option value="HR">Haryana</option><option value="RJ">Rajasthan</option>
+          <option value="GJ">Gujarat</option><option value="WB">West Bengal</option><option value="MP">Madhya Pradesh</option>
+          <option value="PB">Punjab</option><option value="KL">Kerala</option><option value="OD">Odisha</option>
+          <option value="BR">Bihar</option><option value="CH">Chhattisgarh</option><option value="JH">Jharkhand</option>
+          <option value="AS">Assam</option><option value="HP">Himachal Pradesh</option><option value="UK">Uttarakhand</option>
+          <option value="GA">Goa</option><option value="JK">J&amp;K / Ladakh</option><option value="NL">Nagaland</option>
+          <option value="MN">Manipur</option><option value="TR">Tripura</option><option value="ME">Meghalaya</option>
+          <option value="PY">Puducherry</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Property Market Value / Agreement Value</label>
+        <div class="input-wrap"><span class="input-prefix">₹</span><input type="number" id="propVal" value="8000000"><span class="input-suffix">INR</span></div>
+      </div>
+      <div class="form-group"><label>Buyer Gender</label>
+        <div class="radio-group">
+          <div class="radio-btn active" id="gm" onclick="setGender('M')">👨 Male</div>
+          <div class="radio-btn" id="gf" onclick="setGender('F')">👩 Female</div>
+          <div class="radio-btn" id="gj" onclick="setGender('J')">👥 Joint</div>
+        </div>
+      </div>
+      <div class="form-group"><label>Property Type</label>
+        <select id="propType"><option value="residential">Residential</option><option value="commercial">Commercial</option></select>
+      </div>
+      <div class="state-note" id="stateNote">Maharashtra: Male 6%, Female 5%, Joint 6%. Reg: 1% (max ₹30,000). Surcharge: 1% Metro Cess.</div>
+      <button class="btn-calc" onclick="calculate()">🧮 Calculate Charges</button>
+    </div>
+
+    <div>
+      <div class="card" id="resultsCard" style="display:none">
+        <h3>📊 Registration Cost Breakdown</h3>
+        <div class="kpi-big">
+          <div class="kpi-big-label">Total Upfront Cost (Stamp + Registration)</div>
+          <div class="kpi-big-value" id="totalCost">—</div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi"><div class="kpi-label">Stamp Duty</div><div class="kpi-value" id="stampDuty">—</div></div>
+          <div class="kpi"><div class="kpi-label">Reg. Charges</div><div class="kpi-value" id="regCharges">—</div></div>
+          <div class="kpi"><div class="kpi-label">Stamp Duty %</div><div class="kpi-value" id="stampPct">—</div></div>
+          <div class="kpi"><div class="kpi-label">Reg. %</div><div class="kpi-value" id="regPct">—</div></div>
+        </div>
+        <div class="section-title">Detailed Calculation</div>
+        <div class="detail-row"><span class="detail-label">Property Value</span><span class="detail-value" id="dPropVal">—</span></div>
+        <div class="detail-row"><span class="detail-label">Applicable Stamp Duty Rate</span><span class="detail-value" id="dStampRate">—</span></div>
+        <div class="detail-row"><span class="detail-label">Stamp Duty Amount</span><span class="detail-value" id="dStamp">—</span></div>
+        <div class="detail-row"><span class="detail-label">Registration Rate</span><span class="detail-value" id="dRegRate">—</span></div>
+        <div class="detail-row"><span class="detail-label">Registration Charges</span><span class="detail-value" id="dReg">—</span></div>
+        <div class="detail-row"><span class="detail-label">Miscellaneous / Surcharge</span><span class="detail-value" id="dMisc">—</span></div>
+        <div class="detail-row"><span class="detail-label" style="color:var(--text);font-weight:600">Total Cost</span><span class="detail-value" style="color:var(--purple)" id="dTotal">—</span></div>
+        <div class="section-title">As % of Property Value</div>
+        <div class="detail-row"><span class="detail-label">Effective Total Rate</span><span class="detail-value" id="effRate">—</span></div>
+        <div class="detail-row"><span class="detail-label">Total Cost + Property Value</span><span class="detail-value" id="allIn">—</span></div>
+        <div class="detail-row"><span class="detail-label">State</span><span class="detail-value" id="dState">—</span></div>
+        <div class="detail-row"><span class="detail-label">Gender Applied</span><span class="detail-value" id="dGender">—</span></div>
+      </div>
+      <div class="card" id="placeholderCard">
+        <div style="font-size:48px;opacity:0.2">🏛️</div>
+        <p style="color:var(--dim);text-align:center;font-size:13px">Select state, enter value<br>and calculate charges</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>📑 Stamp Duty Rates — All States (2024-25)</h3>
+    <div style="overflow-x:auto;max-height:360px;overflow-y:auto;">
+      <table class="rates-table" id="ratesTable">
+        <thead><tr><th>State</th><th>Male</th><th>Female</th><th>Joint</th><th>Registration</th><th>Notes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>⚠️ Disclaimer:</strong> Stamp duty rates are sourced from publicly available state government schedules as of 2024-25 and may have changed. Always verify with the concerned Sub-Registrar office or official state government portal before finalising any transaction. This tool does not account for GST on under-construction properties or TDS obligations under Section 194IA.</p>
+  </div>
+</main>
+
+<script>
+// THEME
+const html=document.documentElement;
+const themeKnob=document.getElementById('themeKnob');
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const t=html.getAttribute('data-theme')==='light'?'dark':'light';
+  html.setAttribute('data-theme',t);themeKnob.textContent=t==='dark'?'🌙':'☀️';
+  localStorage.setItem('viipie-theme-03',t);
+});
+const saved=localStorage.getItem('viipie-theme-03');
+if(saved&&saved!=='light'){html.setAttribute('data-theme',saved);themeKnob.textContent='🌙';}
+
+let gender='M';
+function setGender(g){
+  gender=g;
+  ['M','F','J'].forEach(x=>document.getElementById('g'+x.toLowerCase()).classList.remove('active'));
+  document.getElementById('g'+g.toLowerCase()).classList.add('active');
+  updateRateInfo();
+}
+
+const states={
+  MH:['Maharashtra',6,5,6,1,30000,1,'Reg capped ₹30,000. +1% Metro Cess in Mumbai/Pune.'],
+  DL:['Delhi',6,4,5,1,null,0,'Female gets 2% concession.'],
+  KA:['Karnataka',5.6,5.6,5.6,1,null,0,'Uniform rate regardless of gender.'],
+  TN:['Tamil Nadu',7,7,7,4,40000,0,'Reg capped ₹40,000 for residential.'],
+  TS:['Telangana',5,5,5,0.5,null,0,'Transfer duty 1.5%, total ~7%.'],
+  AP:['Andhra Pradesh',5,5,5,1,null,0,'Plus 1.5% transfer duty.'],
+  UP:['Uttar Pradesh',7,6,7,1,null,0,'Female 1% concession.'],
+  HR:['Haryana',7,5,6,2,null,0,'Female gets 2% concession.'],
+  RJ:['Rajasthan',6,5,5,1,null,0,'Female 1% concession.'],
+  GJ:['Gujarat',4.9,4.9,4.9,1,null,0,'Uniform rate.'],
+  WB:['West Bengal',7,6,7,1,null,1,'+1% surcharge properties >₹1Cr.'],
+  MP:['Madhya Pradesh',7.5,7.5,7.5,3,null,0,'Higher reg charge.'],
+  PB:['Punjab',7,5,6,1,null,0,'Female 2% concession.'],
+  KL:['Kerala',8,8,8,2,null,0,'Highest stamp duty state.'],
+  OD:['Odisha',5,4,5,2,null,0,'Female 1% concession.'],
+  BR:['Bihar',6.3,5.7,6,2,null,0,'Female concession 0.6%.'],
+  CH:['Chhattisgarh',5,4,5,4,null,0,'Female 1% concession.'],
+  JH:['Jharkhand',4,3,4,3,null,0,'Female 1% concession.'],
+  AS:['Assam',8.25,7.25,8.25,1,null,0,'Female 1% concession.'],
+  HP:['Himachal Pradesh',6,4,5,2,null,0,'Female 2% concession.'],
+  UK:['Uttarakhand',5,3.75,5,2,null,0,'Female 1.25% concession.'],
+  GA:['Goa',3.5,3.5,3.5,3,null,0,'Lowest rate coastal state.'],
+  JK:['J&K / Ladakh',7,3,5,1,null,0,'Female significant concession.'],
+  NL:['Nagaland',6,5,6,2,null,0,'Female 1% concession.'],
+  MN:['Manipur',7,6,7,3,null,0,'Female 1% concession.'],
+  TR:['Tripura',5,4,5,1,null,0,'Female 1% concession.'],
+  ME:['Meghalaya',9.9,9.9,9.9,1,null,0,'High stamp duty.'],
+  PY:['Puducherry',7,7,7,2,null,0,'Union Territory.'],
+};
+
+function updateRateInfo(){
+  const s=document.getElementById('state').value,d=states[s];
+  if(!d)return;
+  document.getElementById('stateNote').textContent=`${d[0]}: Male ${d[1]}%, Female ${d[2]}%, Joint ${d[3]}%. Reg: ${d[4]}%${d[5]?' (max ₹'+d[5].toLocaleString('en-IN')+')':''}. ${d[7]}`;
+}
+
+const tb=document.querySelector('#ratesTable tbody');
+Object.entries(states).forEach(([k,d])=>{
+  const tr=document.createElement('tr');tr.id='row-'+k;
+  tr.innerHTML=`<td>${d[0]}</td><td>${d[1]}%</td><td>${d[2]}%</td><td>${d[3]}%</td><td>${d[4]}%${d[5]?' (cap ₹'+d[5].toLocaleString('en-IN')+')':''}</td><td style="font-size:10px">${d[7]}</td>`;
+  tb.appendChild(tr);
+});
+
+function fmt(n){if(Math.abs(n)>=1e7)return'₹'+(n/1e7).toFixed(2)+' Cr';if(Math.abs(n)>=1e5)return'₹'+(n/1e5).toFixed(2)+' L';return'₹'+Math.round(n).toLocaleString('en-IN');}
+
+function calculate(){
+  const s=document.getElementById('state').value;
+  const val=parseFloat(document.getElementById('propVal').value)||0;
+  if(!val){alert('Please enter property value.');return;}
+  const d=states[s];
+  const stampRate=gender==='M'?d[1]:gender==='F'?d[2]:d[3];
+  const regRate=d[4],regMax=d[5],miscRate=d[6];
+  const stamp=val*stampRate/100;
+  let reg=val*regRate/100;
+  if(regMax&&reg>regMax)reg=regMax;
+  const misc=val*miscRate/100;
+  const total=stamp+reg+misc;
+  document.getElementById('placeholderCard').style.display='none';
+  document.getElementById('resultsCard').style.display='block';
+  document.getElementById('totalCost').textContent=fmt(total);
+  document.getElementById('stampDuty').textContent=fmt(stamp);
+  document.getElementById('regCharges').textContent=fmt(reg);
+  document.getElementById('stampPct').textContent=stampRate+'%';
+  document.getElementById('regPct').textContent=regRate+'%';
+  document.getElementById('dPropVal').textContent=fmt(val);
+  document.getElementById('dStampRate').textContent=stampRate+'%';
+  document.getElementById('dStamp').textContent=fmt(stamp);
+  document.getElementById('dRegRate').textContent=regRate+'%'+(regMax?' (capped)':'');
+  document.getElementById('dReg').textContent=fmt(reg);
+  document.getElementById('dMisc').textContent=misc>0?fmt(misc)+' ('+miscRate+'%)':'₹0 (Not applicable)';
+  document.getElementById('dTotal').textContent=fmt(total);
+  document.getElementById('effRate').textContent=((total/val)*100).toFixed(2)+'%';
+  document.getElementById('allIn').textContent=fmt(val+total);
+  document.getElementById('dState').textContent=d[0];
+  document.getElementById('dGender').textContent=gender==='M'?'Male':gender==='F'?'Female':'Joint';
+  document.querySelectorAll('.highlight-row').forEach(r=>r.classList.remove('highlight-row'));
+  const row=document.getElementById('row-'+s);if(row)row.classList.add('highlight-row');
+}
+calculate();
+</script>
+</body>
+</html>
