@@ -3,8 +3,7 @@
   <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Viipie Realty Tools - Real Estate Calculators</title>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+        <title>Viipie Realty Tools</title>
       <style>
                 * {
                               margin: 0;
@@ -13,498 +12,223 @@
                 }
 
                 body {
-                              font-family: 'DM Sans', sans-serif;
-                              background: #f5f0e8;
-                              color: #1a1208;
-                              min-height: 100vh;
+                              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                              background: #f8f9fa;
+                              padding: 20px;
                 }
 
-                /* HEADER */
-                header {
-                              background: #fff;
-                              padding: 15px 25px;
-                              display: flex;
-                              justify-content: space-between;
-                              align-items: center;
-                              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                }
-
-                .logo {
-                              display: flex;
-                              align-items: center;
-                              gap: 12px;
-                              cursor: pointer;
-                              text-decoration: none;
-                }
-
-                .logo-badge {
-                              width: 45px;
-                              height: 45px;
-                              background: linear-gradient(135deg, #c9a84c, #a07830);
-                              border-radius: 9px;
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              font-weight: 700;
-                              color: #fff;
-                              font-size: 22px;
-                }
-
-                .logo-text {
-                              font-family: 'Playfair Display', serif;
-                              font-size: 20px;
-                              color: #1a1208;
-                              font-weight: 700;
-                }
-
-                .user-section {
-                              display: flex;
-                              gap: 15px;
-                              align-items: center;
-                }
-
-                .user-info {
-                              font-size: 13px;
-                              color: #7a6240;
-                              text-align: right;
-                }
-
-                .logout-btn {
-                              background: #c9a84c;
-                              color: #1a1208;
-                              border: none;
-                              padding: 9px 18px;
-                              border-radius: 7px;
-                              cursor: pointer;
-                              font-weight: 600;
-                              font-size: 12px;
-                              transition: all 0.2s;
-                }
-
-                .logout-btn:hover {
-                              opacity: 0.85;
-                              transform: scale(1.02);
-                }
-
-                /* LOGIN PAGE */
-                .login-page {
-                              display: flex;
-                              flex-direction: column;
-                              justify-content: center;
-                              align-items: center;
-                              min-height: calc(100vh - 80px);
-                              padding: 40px 20px;
-                }
-
-                .login-box {
-                              background: #fff;
-                              padding: 50px 40px;
-                              border-radius: 15px;
-                              box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-                              max-width: 450px;
-                              width: 100%;
-                }
-
-                .login-box h1 {
-                              font-family: 'Playfair Display', serif;
-                              font-size: 32px;
-                              color: #a07830;
-                              margin-bottom: 12px;
-                              text-align: center;
-                }
-
-                .login-box p {
-                              color: #7a6240;
-                              text-align: center;
-                              margin-bottom: 35px;
-                              font-size: 14px;
-                }
-
-                .form-group {
-                              margin-bottom: 20px;
-                }
-
-                .form-group label {
-                              display: block;
-                              font-size: 12px;
-                              color: #7a6240;
-                              margin-bottom: 7px;
-                              font-weight: 500;
-                }
-
-                .form-group input {
-                              width: 100%;
-                              padding: 11px 15px;
-                              border: 1px solid #ddd;
-                              border-radius: 7px;
-                              font-size: 14px;
-                              font-family: 'DM Sans', sans-serif;
-                              transition: border 0.2s;
-                }
-
-                .form-group input:focus {
-                              outline: none;
-                              border-color: #c9a84c;
-                              box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
-                }
-
-                .checkbox-group {
-                              display: flex;
-                              align-items: center;
-                              gap: 8px;
-                              margin-bottom: 25px;
-                }
-
-                .checkbox-group input[type="checkbox"] {
-                              width: 18px;
-                              height: 18px;
-                              cursor: pointer;
-                              accent-color: #c9a84c;
-                }
-
-                .checkbox-group label {
-                              font-size: 13px;
-                              color: #7a6240;
-                              cursor: pointer;
-                }
-
-                .login-btn {
-                              width: 100%;
-                              background: linear-gradient(135deg, #c9a84c, #a07830);
-                              color: #1a1208;
-                              border: none;
-                              padding: 13px;
-                              border-radius: 8px;
-                              font-weight: 700;
-                              font-size: 15px;
-                              cursor: pointer;
-                              transition: all 0.2s;
-                              font-family: 'DM Sans', sans-serif;
-                }
-
-                .login-btn:hover {
-                              opacity: 0.9;
-                              transform: translateY(-2px);
-                              box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);
-                }
-
-                .divider {
-                              text-align: center;
-                              margin: 25px 0;
-                              color: #bbb;
-                              font-size: 12px;
-                }
-
-                .divider::before {
-                              content: "";
-                              display: block;
-                              height: 1px;
-                              background: #ddd;
-                              margin-bottom: 12px;
-                }
-
-                .divider::after {
-                              content: "";
-                              display: block;
-                              height: 1px;
-                              background: #ddd;
-                              margin-top: 12px;
-                  }
-
-                .google-btn {
-                              width: 100%;
-                              padding: 12px;
-                              border: 1px solid #ddd;
-                              border-radius: 8px;
-                              background: #fff;
-                              cursor: pointer;
-                              font-weight: 600;
-                              font-size: 14px;
-                              color: #1a1208;
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              gap: 10px;
-                              transition: all 0.2s;
-                }
-
-                .google-btn:hover {
-                              border-color: #c9a84c;
-                              background: #fffbf5;
-                }
-
-                .google-btn img {
-                              width: 18px;
-                }
-
-                /* TOOLS PAGE */
-                .tools-page {
-                              display: none;
-                              padding: 40px 25px;
-                }
-
-                .tools-page.active {
-                              display: block;
-                }
-
-                .tools-container {
+                .container {
                               max-width: 1200px;
                               margin: 0 auto;
                 }
 
+                header {
+                              text-align: center;
+                              margin-bottom: 50px;
+                              padding: 30px 0;
+                }
+
+                h1 {
+                              font-size: 42px;
+                              color: #333;
+                              margin-bottom: 10px;
+                }
+
+                .subtitle {
+                              font-size: 18px;
+                              color: #666;
+                              margin-bottom: 30px;
+                }
+
                 .tools-grid {
                               display: grid;
-                              grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                              gap: 20px;
-                              margin-top: 30px;
+                              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                              gap: 30px;
+                              margin-bottom: 40px;
                 }
 
                 .tool-card {
-                              background: #fff;
-                              border: 1px solid #ddd;
+                              background: white;
                               border-radius: 12px;
-                              padding: 25px 20px;
-                              text-align: center;
+                              overflow: hidden;
+                              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                              transition: transform 0.3s, box-shadow 0.3s;
                               cursor: pointer;
-                              transition: all 0.3s;
                               text-decoration: none;
                               color: inherit;
                               display: flex;
                               flex-direction: column;
-                              align-items: center;
-                              min-height: 200px;
                 }
 
                 .tool-card:hover {
-                              transform: translateY(-5px);
-                              box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-                              border-color: #c9a84c;
+                              transform: translateY(-8px);
+                              box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
                 }
 
                 .tool-icon {
-                              font-size: 48px;
+                              font-size: 60px;
+                              padding: 40px;
+                              text-align: center;
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                }
+
+                .tool-content {
+                              padding: 30px;
+                              flex-grow: 1;
+                              display: flex;
+                              flex-direction: column;
+                }
+
+                .tool-title {
+                              font-size: 24px;
+                              font-weight: 600;
+                              color: #333;
+                              margin-bottom: 10px;
+                }
+
+                .tool-description {
+                              font-size: 16px;
+                              color: #666;
+                              margin-bottom: 20px;
+                              flex-grow: 1;
+                }
+
+                .tool-features {
+                              font-size: 14px;
+                              color: #999;
+                              list-style: none;
                               margin-bottom: 15px;
                 }
 
-                .tool-name {
-                              font-size: 15px;
-                              font-weight: 700;
-                              color: #a07830;
-                              margin-bottom: 8px;
+                .tool-features li {
+                              padding: 5px 0;
                 }
 
-                .tool-desc {
-                              font-size: 12px;
-                              color: #7a6240;
-                              line-height: 1.5;
+                .tool-features li:before {
+                              content: "✓ ";
+                              color: #667eea;
+                              font-weight: bold;
+                              margin-right: 8px;
                 }
 
-                /* FOOTER */
+                .cta-button {
+                              display: inline-block;
+                              background: #667eea;
+                              color: white;
+                              padding: 12px 24px;
+                              border-radius: 6px;
+                              text-decoration: none;
+                              font-weight: 600;
+                              font-size: 14px;
+                              transition: background 0.3s;
+                              border: none;
+                              cursor: pointer;
+                }
+
+                .cta-button:hover {
+                              background: #5568d3;
+                }
+
                 footer {
                               text-align: center;
-                              color: #7a6240;
-                              font-size: 11px;
-                              padding: 25px;
-                              border-top: 1px solid #ddd;
+                              padding: 40px 20px;
+                              color: #999;
+                              border-top: 1px solid #eee;
                               margin-top: 40px;
                 }
 
-                /* RESPONSIVE */
                 @media (max-width: 768px) {
-                              .login-box {
-                                                padding: 35px 25px;
+                              h1 {
+                                                font-size: 28px;
                               }
 
-                              .login-box h1 {
-                                                font-size: 26px;
+                              .subtitle {
+                                                font-size: 16px;
                               }
 
                               .tools-grid {
-                                                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                                                gap: 15px;
+                                                grid-template-columns: 1fr;
+                              }
+
+                              .tool-card {
+                                                margin-bottom: 20px;
                               }
                 }
             </style>
   </head>
   <body>
-        <header>
-                  <a href="#" class="logo" onclick="goHome(event)">
-                                <div class="logo-badge">V</div>div>
-                                <div class="logo-text">Viipie</div>div>
-                  </a>a>
-                  <div class="user-section" id="userSection" style="display: none;">
-                                <div class="user-info">
-                                                  <div style="font-weight: 600;" id="userName">User</div>div>
-                                                  <div style="font-size: 11px; margin-top: 2px;" id="userEmail">email@gmail.com</div>div>
-                                </div>div>
-                                <button class="logout-btn" onclick="logout()">Logout</button>button>
-                  </div>div>
-        </header>
-
-        <main>
-                  <!-- LOGIN PAGE -->
-                  <div class="login-page" id="loginPage">
-                                <div class="login-box">
-                                                  <h1>Viipie Realty</h1>
-                                                <p>Professional Real Estate Calculators for India</p>
-                                                <form id="emailForm" onsubmit="emailLogin(event)">
-                                                                    <div class="form-group">
-                                                                                            <label for="email">Email Address</label>label>
-                                                                                            <input type="email" id="email" name="email" placeholder="your@gmail.com" required>
-                                                                    </div>div>
-                                                                    <div class="checkbox-group">
-                                                                                            <input type="checkbox" id="keepLogin" name="keepLogin">
-                                                                                            <label for="keepLogin">Keep me logged in</label>label>
-                                                                    </div>div>
-                                                                    <button type="submit" class="login-btn">Login with Email</button>button>
-                                                </form>form>
-                                                <div class="divider">OR</div>div>
-                                                <button class="google-btn" onclick="googleLogin()">
-                                                                    <svg width="18" height="18" viewBox="0 0 24 24">
-                                                                                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                                                                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                                                                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                                                                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                                                                    </svg>svg>
-                                                                    Sign in with Google
-                                                </button>button>
-                                </div>div>
-                  </div>div>
-        
-                <!-- TOOLS PAGE -->
-                <div class="tools-page" id="toolsPage">
-                            <div class="tools-container">
-                                            <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; color: #a07830; margin-bottom: 10px;">Real Estate Tools</h2>
-                                            <p style="color: #7a6240; font-size: 14px; margin-bottom: 25px;">Choose a tool to get started with your real estate analysis</p>
-                                            <div class="tools-grid">
-                                                                <a href="ROI-calculator.html" class="tool-card" onclick="trackTool('ROI Calculator', event)">
-                                                                                        <div class="tool-icon">📊</div>div>
-                                                                                        <div class="tool-name">ROI Calculator</div>div>
-                                                                                        <div class="tool-desc">Analyze investment returns & cash flow</div>div>
-                                                                </a>a>
-                                                                <a href="Rent-vs-Buy.html" class="tool-card" onclick="trackTool('Rent vs Buy', event)">
-                                                                                        <div class="tool-icon">🏠</div>div>
-                                                                                        <div class="tool-name">Rent vs Buy</div>div>
-                                                                                        <div class="tool-desc">Compare renting and buying options</div>div>
-                                                                </a>a>
-                                                                <a href="Rental-yield.html" class="tool-card" onclick="trackTool('Rental Yield', event)">
-                                                                                        <div class="tool-icon">💰</div>div>
-                                                                                        <div class="tool-name">Rental Yield</div>div>
-                                                                                        <div class="tool-desc">Calculate rental income & yields</div>div>
-                                                                </a>a>
-                                                                <a href="Stamp-duty.html" class="tool-card" onclick="trackTool('Stamp Duty', event)">
-                                                                                        <div class="tool-icon">📋</div>div>
-                                                                                        <div class="tool-name">Stamp Duty</div>div>
-                                                                                        <div class="tool-desc">Estimate registration & legal charges</div>div>
-                                                                </a>a>
+        <div class="container">
+                  <header>
+                                <h1>Viipie Realty Tools</h1>
+                              <p class="subtitle">Professional Real Estate Calculators</p>p>
+                  </header>
+                
+                <div class="tools-grid">
+                            <a href="ROI-calculator.html" class="tool-card">
+                                            <div class="tool-icon">📊</div>div>
+                                            <div class="tool-content">
+                                                                <h2 class="tool-title">ROI Calculator</h2>
+                                                                <p class="tool-description">Calculate your investment returns and analyze cash flow projections.</p>p>
+                                                                <ul class="tool-features">
+                                                                                        <li>Annual Returns Analysis</li>
+                                                                                        <li>Cash Flow Projections</li>
+                                                                                        <li>ROI Comparison</li>
+                                                                </ul>ul>
+                                                                <button class="cta-button">Use Tool</button>button>
                                             </div>div>
-                            </div>div>
+                            </a>a>
+                
+                            <a href="Rent-vs-Buy.html" class="tool-card">
+                                            <div class="tool-icon">🏠</div>div>
+                                            <div class="tool-content">
+                                                                <h2 class="tool-title">Rent vs Buy</h2>
+                                                                <p class="tool-description">Compare the financial benefits of renting versus buying a property.</p>p>
+                                                                <ul class="tool-features">
+                                                                                        <li>Cost Comparison</li>
+                                                                                        <li>Break-even Analysis</li>
+                                                                                        <li>Long-term Projections</li>
+                                                                </ul>ul>
+                                                                <button class="cta-button">Use Tool</button>button>
+                                            </div>div>
+                            </a>a>
+                
+                            <a href="Rental-yield.html" class="tool-card">
+                                            <div class="tool-icon">💰</div>div>
+                                            <div class="tool-content">
+                                                                <h2 class="tool-title">Rental Yield</h2>
+                                                                <p class="tool-description">Calculate rental income potential and investment yields.</p>p>
+                                                                <ul class="tool-features">
+                                                                                        <li>Yield Calculations</li>
+                                                                                        <li>Income Projections</li>
+                                                                                        <li>Expense Tracking</li>
+                                                                </ul>ul>
+                                                                <button class="cta-button">Use Tool</button>button>
+                                            </div>div>
+                            </a>a>
+                
+                            <a href="Stamp-duty.html" class="tool-card">
+                                            <div class="tool-icon">📋</div>div>
+                                            <div class="tool-content">
+                                                                <h2 class="tool-title">Stamp Duty</h2>
+                                                                <p class="tool-description">Estimate registration fees and legal charges for property purchases.</p>p>
+                                                                <ul class="tool-features">
+                                                                                        <li>Stamp Duty Calculation</li>
+                                                                                        <li>Registration Fees</li>
+                                                                                        <li>Total Cost Estimation</li>
+                                                                </ul>ul>
+                                                                <button class="cta-button">Use Tool</button>button>
+                                            </div>div>
+                            </a>a>
                 </div>div>
-        </main>
-  
+        </div>div>
+      
       <footer>
-                <p>© 2026 Viipie Realty Tools | Professional Real Estate Calculators for India</p>p>
+                <p>&copy; 2026 Viipie Realty Tools. All rights reserved.</p>
       </footer>
-
-        <script>
-                  function emailLogin(event) {
-                                event.preventDefault();
-                                const email = document.getElementById('email').value;
-                                const keepLogin = document.getElementById('keepLogin').checked;
-                                if (!email) return;
-
-                                const userData = {
-                                                  email: email,
-                                                  name: email.split('@')[0],
-                                                  loginTime: new Date().toISOString()
-                                };
-
-                                localStorage.setItem('viipieUser', JSON.stringify(userData));
-                                if (keepLogin) {
-                                                  localStorage.setItem('viipieKeepLogged', 'true');
-                                }
-
-                                // Send to backend (optional)
-                                fetch('https://your-backend-url.com/api/user-login', {
-                                                  method: 'POST',
-                                                  headers: { 'Content-Type': 'application/json' },
-                                                  body: JSON.stringify(userData)
-                                }).catch(() => {});
-
-                                showToolsPage(userData);
-                  }
-
-                  function googleLogin() {
-                                const userData = {
-                                                  email: 'user@gmail.com',
-                                                  name: 'User',
-                                                  loginTime: new Date().toISOString()
-                                };
-                                localStorage.setItem('viipieUser', JSON.stringify(userData));
-                                localStorage.setItem('viipieKeepLogged', 'true');
-                                showToolsPage(userData);
-                  }
-
-                  function showToolsPage(userData) {
-                                document.getElementById('loginPage').style.display = 'none';
-                                document.getElementById('toolsPage').classList.add('active');
-                                document.getElementById('userSection').style.display = 'flex';
-                                document.getElementById('userName').textContent = userData.name;
-                                document.getElementById('userEmail').textContent = userData.email;
-                  }
-
-                  function logout() {
-                                localStorage.removeItem('viipieUser');
-                                localStorage.removeItem('viipieKeepLogged');
-                                document.getElementById('loginPage').style.display = 'flex';
-                                document.getElementById('toolsPage').classList.remove('active');
-                                document.getElementById('userSection').style.display = 'none';
-                                document.getElementById('emailForm').reset();
-                  }
-
-                  function goHome(event) {
-                                event.preventDefault();
-                                const user = localStorage.getItem('viipieUser');
-                                if (user) {
-                                                  window.location.href = '/';
-                                }
-                  }
-
-                  function trackTool(toolName, event) {
-                                const user = JSON.parse(localStorage.getItem('viipieUser') || '{}');
-                                const usage = {
-                                                  tool: toolName,
-                                                  user: user,
-                                                  timestamp: new Date().toISOString()
-                                };
-
-                                fetch('https://your-backend-url.com/api/tool-usage', {
-                                                  method: 'POST',
-                                                  headers: { 'Content-Type': 'application/json' },
-                                                  body: JSON.stringify(usage)
-                                }).catch(() => {});
-
-                                let history = JSON.parse(localStorage.getItem('viipieToolUsage') || '[]');
-                                history.push(usage);
-                                localStorage.setItem('viipieToolUsage', JSON.stringify(history));
-                  }
-
-                  // Check login on page load
-                  window.addEventListener('load', () => {
-                                const user = localStorage.getItem('viipieUser');
-                                const keepLogged = localStorage.getItem('viipieKeepLogged');
-                                if (user && keepLogged) {
-                                                  const userData = JSON.parse(user);
-                                                  showToolsPage(userData);
-                                }
-                  });
-        </script>
   </body>
-</html>html>
-        </script>
-      </footer></p></h1>
-        </main>
-        </header>
+</html>html></p>
+      </footer></li></li></h1>
+                  </header>
   </body>
       </style></title>
   </head>
